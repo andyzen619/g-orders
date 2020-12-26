@@ -6,6 +6,8 @@ import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 import firebase from './firebase';
 import FirebaseContext from './context/FirebaseContext';
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
 
 ReactDOM.render(
     <React.StrictMode>

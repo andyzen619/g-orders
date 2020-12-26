@@ -1,11 +1,16 @@
 // handles react router routing
 import React from 'react';
-import {BrowserRouter as Router, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+
+import Home from './components/Home';
 
 const router = () => {
   return (<Router>
-    <div></div>
-    <Switch></Switch>
+    <Switch>
+      <Route path='/'>
+        <Home/>
+      </Route>
+    </Switch>
   </Router>);
 };
 

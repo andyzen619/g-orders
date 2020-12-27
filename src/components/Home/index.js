@@ -2,12 +2,13 @@ import React from 'react';
 
 // import HomeContainer from './HomeContainer';
 import DateButton from '../DateButton';
+import Schedule from '../Schedule';
 
 const Home = () => {
   return (
-    <div className='flex flex-col h-screen bg-blue-200'>
+    <div className='flex flex-col w-screen h-screen'>
       <DateButton/>
-      <div className='flex flex-1 justify-center'>Schedule</div>
+      <Schedule/>
       <div className='flex justify-center'>New Order</div>
     </div>
   );

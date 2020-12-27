@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-const Button = ({text}) => {
+const Button = ({text, color}) => {
   return (
     <div className={`
-        flex justify-center bg-gray-400 
-        rounded my-2 px-2 py-1 
+        flex justify-center bg-${color}-400
+        shadow 
+        rounded m-2 px-2 py-1 
         text-white font-bold
         text-md
       `}>
@@ -16,9 +17,9 @@ const Button = ({text}) => {
 
 const ScheduleItemButtons = () => {
   return (
-    <div className='flex justify-evenly'>
-      <Button text='Edit'/>
-      <Button text='Delete'/>
+    <div className='flex justify-center'>
+      <Button text='Edit' color='blue'/>
+      <Button text='Delete' color='red'/>
     </div>
   );
 };

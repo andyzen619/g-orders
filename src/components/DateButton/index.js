@@ -8,7 +8,7 @@ const DateButton = () => {
   const [showCalender, setShowCalendar] = useState(false);
 
   return (
-    <div className='flex justify-center m-4'>
+    <div className='flex justify-center bg-gray-500 p-4'>
       <SingleDatePicker
         date={startDate}
         onDateChange={(date) => setStartDate(date)}

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, {useState, useEffect} from 'react';
 import {ORDER_SIZES} from '../../constants';
+import ScheduleItemView from './ScheduleItemView';
 
 const mockOrders = [
   {
@@ -20,32 +21,7 @@ const ScheduleItem = ({time, timeSlot}) => {
     setOrders(mockOrders);
   }, []);
   return (
-    <div className='flex flex-col flex-1'>
-      <div className='flex justify-center text-3xl text-gray-600'>
-        {`${timeSlot}:${time}`}
-      </div>
-      <div className='flex flex-col'>
-        {orders.map(
-            ({phoneNumber, size}, k) => (
-              <div
-                key={k}
-                className={
-                  `
-                  flex justify-evenly
-                  pt-6 pb-3 text-md border-b-2 border-gray-200
-                  `
-                }>
-                <div>
-                  {`#${phoneNumber}`}
-                </div>
-                <div className='font-bold'>
-                  {size}
-                </div>
-              </div>
-            ))
-        }
-      </div>
-    </div>
+    <ScheduleItemView time={time} timeSlot={timeSlot} orders={orders}/>
   );
 };
 

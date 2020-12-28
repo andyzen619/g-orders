@@ -1,5 +1,17 @@
-import {createContext} from 'react';
+/* eslint-disable react/prop-types */
+import React, {createContext} from 'react';
 
-const FirebaseContext = createContext(null);
+import firebase from '../firebase';
 
-export default FirebaseContext;
+export const FirebaseContext = createContext(null);
+
+const FirebaseContextProvider = (props) => {
+  return (
+    <FirebaseContext.Provider value={firebase}>
+      {props.children}
+    </FirebaseContext.Provider>
+  );
+};
+
+export default FirebaseContextProvider;
+

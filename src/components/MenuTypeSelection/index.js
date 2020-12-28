@@ -6,7 +6,8 @@ import NewOrderContext from '../../context/NewOrderContext';
 
 
 const MenuTypeSelection = () => {
-  const {mockMenuItemTypes,
+  const {
+    menuItemTypes,
     currentMenuType,
     setCurrentMenuType,
   } = useContext(NewOrderContext);
@@ -17,7 +18,7 @@ const MenuTypeSelection = () => {
 
   return (
     <MenuTypeSelectionView
-      menuItemTypes={mockMenuItemTypes}
+      menuItemTypes={menuItemTypes}
       currentMenuType={currentMenuType}
       onMenuTypeChange={onMenuTypeChange}
     />

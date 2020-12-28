@@ -23,7 +23,7 @@ const MenuTypeSelectionView = ({
     <div
       className={VIEW_LAYOUT_THEME}
     >
-      {menuItemTypes.map(({name}, k) => (
+      {menuItemTypes.map((name, k) => (
         <div
           key={k}
           className={generateMenuTypeTheme({k, currentMenuType})}

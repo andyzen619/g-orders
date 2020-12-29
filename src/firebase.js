@@ -22,15 +22,5 @@ const firebaseConfig = {
 };
 
 firebaseApp.initializeApp(firebaseConfig);
-const firestore = firebaseApp.firestore();
+export const firestore = firebaseApp.firestore();
 
-/**
- * Gets all menuItems from firestore.
- */
-const getMenuItems = async () => {
-  const snap = await firestore.collection('menu-items').get();
-  const menuItems = snap.docs[0].data();
-  return menuItems;
-};
-
-export default {getMenuItems};

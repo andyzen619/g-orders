@@ -4,3 +4,8 @@ export const ORDER_SIZES = {
   LARGE: 'L',
   EXTRA_LARGE: 'EL',
 };
+
+export const ORDER_ACTION_TYPES = {
+  ADD_ITEM: 'ADD_ITEM',
+  REMOVE_ITEM: 'REMOVE_ITEM',
+};

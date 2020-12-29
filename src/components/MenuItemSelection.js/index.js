@@ -1,14 +1,14 @@
 
 import React, {useContext, useState, useEffect} from 'react';
 
-import newOrderContext from '../../context/NewOrderContext';
+import {NewOrderContext} from '../../context/NewOrderContext';
 
 const MenuItemSelection = () => {
   const {
     menuItems,
     currentMenuType,
     menuItemTypes,
-  } = useContext(newOrderContext);
+  } = useContext(NewOrderContext);
 
   const [currentMenuItems, setCurrentMenuItems] = useState([]);
 

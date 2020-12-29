@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 
 import MenuTypeSelectionView from './MenuTypeSelectionView';
 
-import NewOrderContext from '../../context/NewOrderContext';
+import {NewOrderContext} from '../../context/NewOrderContext';
 
 
 const MenuTypeSelection = () => {

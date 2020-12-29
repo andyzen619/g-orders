@@ -2,6 +2,7 @@ import React from 'react';
 
 import MenuTypeSelection from '../MenuTypeSelection';
 import MenuItemSelection from '../MenuItemSelection.js';
+import CurrentOrderButton from '../CurrentOrderButton';
 
 import NewOrderContextProvider from '../../context/NewOrderContext';
 
@@ -13,15 +14,7 @@ const NewOrder = () => {
     `}>
         <MenuTypeSelection/>
         <MenuItemSelection/>
-        <div
-          className={`
-        flex justify-center bg-gray-600 
-        p-2 rounded-t-full mx-auto
-        text-white font-extrabold w-11/12 
-      `}
-        >
-        Current Order
-        </div>
+        <CurrentOrderButton/>
       </div>
     </NewOrderContextProvider>
   );

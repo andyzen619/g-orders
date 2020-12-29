@@ -15,5 +15,5 @@ export const calculateOrder = (order) => {
     }
   });
 
-  return {...order, total: (orderTotal * 1.13).toFixed(2)};
+  return {...order, total: orderTotal.toFixed(2)};
 };

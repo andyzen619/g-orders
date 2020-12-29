@@ -28,6 +28,9 @@ const OrderReducer = (state, action) => {
       }
 
       return calculateOrder(newState);
+    case ORDER_ACTION_TYPES.UPDATE_TIME:
+      const {newTime: time} = action;
+      return {...state, time};
     default:
       return state;
   }

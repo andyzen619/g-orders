@@ -6,7 +6,7 @@
 export const calculateOrder = (order) => {
   let orderTotal = 0;
   Object.entries(order).forEach(([key, value]) => {
-    if (key !== 'total') {
+    if (!['total', 'time'].includes(key)) {
       const {price, numberOfItems} = value;
 
       // eslint-disable-next-line no-unused-vars

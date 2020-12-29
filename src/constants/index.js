@@ -8,4 +8,5 @@ export const ORDER_SIZES = {
 export const ORDER_ACTION_TYPES = {
   ADD_ITEM: 'ADD_ITEM',
   REMOVE_ITEM: 'REMOVE_ITEM',
+  UPDATE_TIME: 'UPDATE_TIME',
 };

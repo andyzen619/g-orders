@@ -1,22 +1,36 @@
-import React from 'react';
+import React, {useEffect, useContext} from 'react';
+import {useParams} from 'react-router-dom';
 
-import MenuTypeSelection from '../MenuTypeSelection';
-import MenuItemSelection from '../MenuItemSelection.js';
-import CurrentOrderButton from '../CurrentOrderButton';
+import {NewOrderContext} from '../../context/NewOrderContext';
+import {HomeContext} from '../../context/HomeContext';
 
-import NewOrderContextProvider from '../../context/NewOrderContext';
+import {ORDER_ACTION_TYPES} from '../../constants';
+import NewOrderView from './NewOrderView';
 
 const NewOrder = () => {
+  const {id} = useParams();
+  const {ordersOfTheDay} = useContext(HomeContext);
+
+  const {orderDispatch} = useContext(NewOrderContext);
+
+  useEffect(() => {
+    if (id) {
+      const currentOrder = ordersOfTheDay.find(
+          ({id: orderId}) => orderId === id,
+      );
+
+      if (currentOrder) {
+        orderDispatch({
+          type: ORDER_ACTION_TYPES.SET_ORDER,
+          newOrder: currentOrder,
+        });
+      }
+    } else {
+      orderDispatch({type: ORDER_ACTION_TYPES.CLEAR_ORDER});
+    }
+  }, []);
   return (
-    <NewOrderContextProvider>
-      <div className={`
-      flex flex-col w-screen h-screen 
-    `}>
-        <MenuTypeSelection/>
-        <MenuItemSelection/>
-        <CurrentOrderButton/>
-      </div>
-    </NewOrderContextProvider>
+    <NewOrderView/>
   );
 };
 

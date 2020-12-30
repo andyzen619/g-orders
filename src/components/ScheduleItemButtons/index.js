@@ -2,6 +2,7 @@
 import React, {useContext} from 'react';
 
 import {HomeContext} from '../../context/HomeContext';
+import {Link} from 'react-router-dom';
 
 const Button = ({text, color, onClick}) => {
   return (
@@ -23,7 +24,9 @@ const ScheduleItemButtons = ({id}) => {
   const {ordersOfTheDay, setOrdersOfTheDay} = useContext(HomeContext);
   return (
     <div className='flex justify-center'>
-      <Button text='Edit' color='blue'/>
+      <Link to={`/editOrder/${id}`}>
+        <Button text='Edit' color='blue'/>
+      </Link>
       <Button text='Delete' color='red'
         onClick={() => {
           const newOrdersOfTheDay = [...ordersOfTheDay]

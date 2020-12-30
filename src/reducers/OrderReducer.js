@@ -48,6 +48,9 @@ const OrderReducer = (state, action) => {
     case ORDER_ACTION_TYPES.CLEAR_ORDER:
       return {total: '0.00', time: '', size: '', phoneNumber: ''};
 
+    case ORDER_ACTION_TYPES.SET_ORDER:
+      const {newOrder} = action;
+      return {...newOrder};
     default:
       return state;
   };

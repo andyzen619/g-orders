@@ -32,6 +32,7 @@ const OrderReducer = (state, action) => {
         newTime,
         newPhoneNumber,
         totalWithTax,
+        id,
       } = action;
 
       const size = calculateSize(totalWithTax);
@@ -41,6 +42,7 @@ const OrderReducer = (state, action) => {
         size,
         time: newTime,
         phoneNumber: newPhoneNumber,
+        id,
       };
 
     case ORDER_ACTION_TYPES.CLEAR_ORDER:

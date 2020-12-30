@@ -7,7 +7,7 @@ import ScheduleItemButtons from '../ScheduleItemButtons';
 import {HomeContext} from '../../context/HomeContext';
 
 const ScheduleItemView = ({time, timeSlot}) => {
-  const {ordersOfTheDay} = useContext(HomeContext);
+  const {ordersOfTheDay, startDate} = useContext(HomeContext);
 
   return (
     <div className='flex flex-col flex-1'>
@@ -20,19 +20,27 @@ const ScheduleItemView = ({time, timeSlot}) => {
               .filter((theOrder) => {
                 const hour = Number(timeSlot) + 12;
                 const minute = Number(time);
+                const date = startDate.date();
+                const month = startDate.month();
+                const year = startDate.year();
 
                 const order = moment(theOrder.time);
-
                 const orderHour = order.hour();
                 const orderMinute = order.minute();
+                const orderDate = order.date();
+                const orderMonth = order.month();
+                const orderYear = order.year();
 
+                if (year !== orderYear) return false;
+                if (month !== orderMonth) return false;
+                if (date !== orderDate) return false;
                 if (hour !== orderHour) return false;
                 if (orderMinute < minute) return false;
-                if (orderMinute > minute + 30) return false;
+                if (orderMinute >= minute + 30) return false;
                 return true;
               })
               .map(
-                  ({phoneNumber, size}, k) => {
+                  ({phoneNumber, size, id}, k) => {
                     return (
                       <div
                         key={k}
@@ -51,7 +59,7 @@ const ScheduleItemView = ({time, timeSlot}) => {
                             {size}
                           </div>
                         </div>
-                        <ScheduleItemButtons/>
+                        <ScheduleItemButtons id={id}/>
                       </div>
                     );
                   })

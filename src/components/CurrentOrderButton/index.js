@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, {useState, useContext} from 'react';
+import {v4 as uuidv4} from 'uuid';
 
 import {NewOrderContext} from '../../context/NewOrderContext';
 import {HomeContext} from '../../context/HomeContext';
@@ -77,7 +78,8 @@ const CurrentOrderButton = () => {
           {Object.entries(order)
               .filter(
                   ([key])=> ![
-                    'total', 'time', 'totalWithTax', 'phoneNumber', 'size',
+                    'total', 'time', 'totalWithTax',
+                    'phoneNumber', 'size', 'id',
                   ].includes(key))
               .map(([key, item])=>
                 (<div
@@ -162,6 +164,7 @@ const CurrentOrderButton = () => {
                 newTime: momentTimeObj.format() || '',
                 newPhoneNumber: phoneNumberInput || '',
                 totalWithTax: order.total * 1.13,
+                id: uuidv4(),
               });
               setTotalWithTax(order.total * 1.13);
             }}

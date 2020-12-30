@@ -10,7 +10,7 @@ export const calculateOrder = (order) => {
   let orderTotal = 0;
   Object.entries(order).forEach(([key, value]) => {
     if (![
-      'total', 'time', 'totalWithTax', 'size', 'phoneNumber',
+      'total', 'time', 'totalWithTax', 'size', 'phoneNumber', 'id',
     ].includes(key)) {
       const {price, numberOfItems} = value;
 

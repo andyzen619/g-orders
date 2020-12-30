@@ -19,7 +19,7 @@ const NewOrderContextProvider = (props) => {
   const [currentMenuType, setCurrentMenuType] = useState(0);
   const [menuItems, setMenuItems] = useState({});
   const [menuItemTypes, setMenuItemsTypes] = useState([]);
-  const [order, orderDispatch] = useReducer(orderReducer, {total: 0, time: ''});
+  const [order, orderDispatch] = useReducer(orderReducer, {total: '0.00', time: '', size: '', phoneNumber: ''});
 
   useEffect(() => {
     const initialize = async () => {

@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
-import moment from 'moment';
+import React, {useState, useContext} from 'react';
 import {SingleDatePicker} from 'react-dates';
+
+import {HomeContext} from '../../context/HomeContext';
 import {VERTICAL_ORIENTATION} from 'react-dates/constants';
 
 const DateButton = () => {
-  const [startDate, setStartDate] = useState(moment());
+  const {startDate, setStartDate} = useContext(HomeContext);
+
   const [showCalender, setShowCalendar] = useState(false);
 
   return (

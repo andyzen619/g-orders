@@ -13,7 +13,7 @@ const ScheduleView = ({hours, currentDate}) => {
           const timeSlot = currentDate.format('h');
           return (
             <div
-              className='flex p-3'
+              className='flex p-3 border-b-2 border-gray-200'
               key={index}>
               <ScheduleItem time={'00'} timeSlot={timeSlot}/>
               <ScheduleItem time={'30'} timeSlot={timeSlot}/>

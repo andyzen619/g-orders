@@ -6,7 +6,7 @@ const Button = ({text, color}) => {
     <div className={`
         flex justify-center bg-${color}-400
         shadow 
-        rounded m-2 px-2 py-1 
+        rounded m-2 px-1 
         text-white font-bold
         text-md
       `}>

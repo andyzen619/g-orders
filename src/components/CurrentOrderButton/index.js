@@ -2,17 +2,28 @@
 import React, {useState, useContext} from 'react';
 
 import {NewOrderContext} from '../../context/NewOrderContext';
+import {HomeContext} from '../../context/HomeContext';
+
 import {ORDER_ACTION_TYPES} from '../../constants';
+import {generateTimeObj} from '../../utils';
+import {Link} from 'react-router-dom';
 
 const CurrentOrderButton = () => {
   const [clicked, setClicked] = useState(false);
   const [totalWithTax, setTotalWithTax] = useState('');
+  const [timeInput, setTimeInput] = useState('');
+  const [phoneNumberInput, setPhoneNumberInput] = useState('');
 
   const {order, orderDispatch} = useContext(NewOrderContext);
+  const {
+    startDate,
+    setOrdersOfTheDay,
+    ordersOfTheDay,
+  } = useContext(HomeContext);
 
   const minimizedTheme = `
     flex justify-center bg-gray-600 
-    p-2 rounded-t-full mx-auto
+    p-2 rounded-t-xl mx-auto
     text-white font-extrabold w-11/12
   `;
 
@@ -24,11 +35,18 @@ const CurrentOrderButton = () => {
   `;
 
   const onTimeChange = (e) => {
-    orderDispatch({
-      type: ORDER_ACTION_TYPES.UPDATE_TIME,
-      newTime: e.target.value,
-    });
+    setTimeInput(e.target.value);
   };
+
+  const onPhoneNumberChange = (e) => {
+    setPhoneNumberInput(e.target.value);
+  };
+
+  const onSubmit = async () => {
+    // orderDispatch({type: ORDER_ACTION_TYPES.CLEAR_ORDER});
+    setOrdersOfTheDay([...ordersOfTheDay, order]);
+  };
+
   return (
     <div
       className={clicked ? maximizedTheme:minimizedTheme}
@@ -37,17 +55,30 @@ const CurrentOrderButton = () => {
         <div
           className='text-lg'
           onClick={() => setClicked(true)}>Current Order</div>
-        <div
-          className='text-sm'
-          onClick={() => setClicked(!clicked)}>
-          {clicked && 'Minimize'}
+        <div className='flex'>
+          <Link to='/home'>
+            <div
+              className='text-sm mx-4'
+            >
+              {clicked && 'Home'}
+            </div>
+          </Link>
+
+          <div
+            className='text-sm'
+            onClick={() => setClicked(!clicked)}>
+            {clicked && 'Minimize'}
+          </div>
         </div>
 
       </div>
       {clicked && (
         <div className='m-4 h-full overflow-y-auto'>
           {Object.entries(order)
-              .filter(([key])=> !['total', 'time'].includes(key))
+              .filter(
+                  ([key])=> ![
+                    'total', 'time', 'totalWithTax', 'phoneNumber', 'size',
+                  ].includes(key))
               .map(([key, item])=>
                 (<div
                   key={key}
@@ -64,6 +95,7 @@ const CurrentOrderButton = () => {
                             type: ORDER_ACTION_TYPES.REMOVE_ITEM,
                             toRemove: item.name,
                           });
+                          setTotalWithTax('');
                         }}
                       >
                         -
@@ -77,6 +109,7 @@ const CurrentOrderButton = () => {
                             type: ORDER_ACTION_TYPES.ADD_ITEM,
                             item,
                           });
+                          setTotalWithTax('');
                         }}
                       >
                         +
@@ -91,8 +124,15 @@ const CurrentOrderButton = () => {
             <div>Time</div>
             <input
               type='text'
-              value={order.time}
+              value={timeInput}
               onChange={onTimeChange}
+              className='flex justify-center'
+            />
+            <div>Phone Number</div>
+            <input
+              type='text'
+              value={phoneNumberInput}
+              onChange={onPhoneNumberChange}
               className='flex justify-center'
             />
           </div>
@@ -114,7 +154,15 @@ const CurrentOrderButton = () => {
               px-2 py-1 rounded-full 
               bg-blue-400
             `}
-            onClick={() => {
+            onClick={async () => {
+              setTotalWithTax(order.total * 1.13);
+              const momentTimeObj = await generateTimeObj(timeInput, startDate);
+              orderDispatch({
+                type: ORDER_ACTION_TYPES.SUBMIT_ORDER,
+                newTime: momentTimeObj.format() || '',
+                newPhoneNumber: phoneNumberInput || '',
+                totalWithTax: order.total * 1.13,
+              });
               setTotalWithTax(order.total * 1.13);
             }}
             >
@@ -124,7 +172,9 @@ const CurrentOrderButton = () => {
               flex justify-center 
               px-2 py-1 my-2 rounded-full 
               bg-green-500
-            `}>
+            `}
+            onClick={onSubmit}
+            >
               Submit
             </div>
           </div>

@@ -69,7 +69,7 @@ const CurrentOrderButtonView = ({
                     <div className='flex flex-col justify-center'>
                       <div
                         className='ml-4 px-3 rounded-full bg-red-400 text-lg'
-                        onClick={onRemove}
+                        onClick={() => onRemove(item)}
                       >
                         -
                       </div>
@@ -77,7 +77,7 @@ const CurrentOrderButtonView = ({
                     <div className='flex flex-col justify-center'>
                       <div
                         className='ml-4 px-3 rounded-full bg-green-400 text-lg'
-                        onClick={onAdd}
+                        onClick={() => onAdd(item)}
                       >
                         +
                       </div>

@@ -47,9 +47,11 @@ const CurrentOrderButton = () => {
         const newOrdersOfTheDay = [...ordersOfTheDay]
             .filter(({id: orderId}) => orderId !== id);
         setOrdersOfTheDay([...newOrdersOfTheDay, order]);
+        window.alert('Order Updated');
         return;
       }
       setOrdersOfTheDay([...ordersOfTheDay, order]);
+      window.alert('Order Added');
     },
     onTaxClick: async () => {
       setTotalWithTax(order.total * 1.13);
@@ -63,14 +65,14 @@ const CurrentOrderButton = () => {
       });
       setTotalWithTax(order.total * 1.13);
     },
-    onAdd: async () => {
+    onAdd: async (item) => {
       orderDispatch({
         type: ORDER_ACTION_TYPES.ADD_ITEM,
         item,
       });
       setTotalWithTax('');
     },
-    onRemove: async () => {
+    onRemove: async (item) => {
       orderDispatch({
         type: ORDER_ACTION_TYPES.REMOVE_ITEM,
         toRemove: item.name,

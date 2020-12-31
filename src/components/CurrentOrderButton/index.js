@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import {NewOrderContext} from '../../context/NewOrderContext';
 import {HomeContext} from '../../context/HomeContext';
+import {FirebaseContext} from '../../context/FirebaseContext';
 
 import {ORDER_ACTION_TYPES} from '../../constants';
 import {generateTimeObj} from '../../utils';
@@ -23,6 +24,7 @@ const CurrentOrderButton = () => {
     setOrdersOfTheDay,
     ordersOfTheDay,
   } = useContext(HomeContext);
+  const {setOrder} = useContext(FirebaseContext);
 
   const {id} = useParams();
 
@@ -47,10 +49,14 @@ const CurrentOrderButton = () => {
         const newOrdersOfTheDay = [...ordersOfTheDay]
             .filter(({id: orderId}) => orderId !== id);
         setOrdersOfTheDay([...newOrdersOfTheDay, order]);
+
+        await setOrder(order);
         window.alert('Order Updated');
         return;
-      }
+      };
       setOrdersOfTheDay([...ordersOfTheDay, order]);
+
+      await setOrder(order);
       window.alert('Order Added');
     },
     onTaxClick: async () => {

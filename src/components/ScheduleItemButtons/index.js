@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import React, {useContext} from 'react';
+import {Link} from 'react-router-dom';
 
 import {HomeContext} from '../../context/HomeContext';
-import {Link} from 'react-router-dom';
+import {FirebaseContext} from '../../context/FirebaseContext';
 
 const Button = ({text, color, onClick}) => {
   return (
@@ -22,6 +23,8 @@ const Button = ({text, color, onClick}) => {
 
 const ScheduleItemButtons = ({id}) => {
   const {ordersOfTheDay, setOrdersOfTheDay} = useContext(HomeContext);
+  const {removeOrder} = useContext(FirebaseContext);
+
   return (
     <div className='flex justify-center'>
       <Link to={`/editOrder/${id}`}>
@@ -32,6 +35,7 @@ const ScheduleItemButtons = ({id}) => {
           const newOrdersOfTheDay = [...ordersOfTheDay]
               .filter(({id: uid}) => uid !== id);
           setOrdersOfTheDay(newOrdersOfTheDay);
+          removeOrder(id);
         }}/>
     </div>
   );

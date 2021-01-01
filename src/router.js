@@ -7,6 +7,7 @@ import NewOrder from './components/NewOrder';
 
 import HomeContextProvider from './context/HomeContext';
 import NewOrderContextProvider from './context/NewOrderContext';
+import NewOrderV2 from './components/NewOrderV2';
 
 const router = () => {
   return (
@@ -18,7 +19,7 @@ const router = () => {
               <NewOrder/>
             </Route>
             <Route path='/newOrder'>
-              <NewOrder/>
+              <NewOrderV2/>
             </Route>
             <Route path='/'>
               <Home/>

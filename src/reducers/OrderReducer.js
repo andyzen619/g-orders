@@ -17,6 +17,7 @@ const OrderReducer = (state, action) => {
 
     case ORDER_ACTION_TYPES.REMOVE_ITEM:
       const toRemoveKey = action.toRemove;
+      if (!newState[toRemoveKey]) return calculateOrder(newState);
       if (newState[toRemoveKey].numberOfItems > 0) {
         newState[toRemoveKey] = {
           ...newState[toRemoveKey],

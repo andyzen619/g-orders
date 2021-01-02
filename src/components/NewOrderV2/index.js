@@ -1,83 +1,93 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable valid-jsdoc */
 /* eslint-disable max-len */
-import React, {useContext, useState, useEffect, useReducer} from 'react';
-import Fuse from 'fuse.js';
-import {useParams} from 'react-router-dom';
+import React, {useContext, useState, useEffect} from 'react';
+import {useParams, Link} from 'react-router-dom';
+import moment from 'moment-timezone';
 
 import {NewOrderContext} from '../../context/NewOrderContext';
-// import {calculateOrder, calculateSize} from '../../utils';
-import orderReducer from '../../reducers/OrderReducer';
-import {ORDER_ACTION_TYPES} from '../../constants';
+import {calculateOrder, flattenMenuItems, generateTimeObj, calculateSize} from '../../utils';
+import {HomeContext} from '../../context/HomeContext';
 
-const options = {
-  keys: [
-    'name',
-  ],
-};
-
-/**
- * Flattens menu items and in an array.
- * @param {*} menuItems
- * @param {*} pattern
- * @param {*} greaterThanZero
- * @param {*} order
- */
-export const flattenMenuItems = (menuItems, pattern, greaterThanZero, order) => {
-  if (!menuItems) return [];
-  if (!order) return [];
-
-  const combinations = Object.values(menuItems.combinations);
-  const dinners = Object.values(menuItems.dinners);
-  const dishes = [];
-
-  Object.values(menuItems.dishes).forEach((dishCategory) => {
-    Object.values(dishCategory).forEach((dish) => {
-      dishes.push(dish);
-    });
-  });
-  const flattenedMenuItems = [...combinations, ...dinners, ...dishes];
-
-  const fuse = new Fuse(
-      flattenedMenuItems.map((menuItem) => ({
-        ...menuItem,
-        numberOfItems: order[menuItem.name]?
-          order[menuItem.name].numberOfItems :
-          '0'})),
-      options);
-  const result = fuse.search(pattern || ' ');
-
-  if (greaterThanZero) {
-    return result.filter(({item}) => item.numberOfItems > 0 )
-        .map(({item}) => item);
-  }
-  return result.map(({item}) => item);
-};
 
 const NewOrderV2 = () => {
   const {menuItems} = useContext(NewOrderContext);
+  const {setOrdersOfTheDay, ordersOfTheDay, startDate} = useContext(HomeContext);
+
   const [search, setSearch] = useState('');
   const [greaterThanZero, setGreaterThanZero] = useState(false);
-  // const [order, setOrder] = useState({total: '0.00', time: '', size: '', phoneNumber: ''});
-  const [order, orderDispatch] = useReducer(orderReducer, {total: '0.00', time: '', size: '', phoneNumber: ''});
+  const [order, setOrder] = useState({total: '0.00', time: '', size: '', phoneNumber: ''});
 
   const {id} = useParams();
 
-  useEffect(() => {
-    if (!id) orderDispatch({type: ORDER_ACTION_TYPES.CLEAR_ORDER});
-  }, []);
 
-  // const clearOrder = () => {};
-  // const addItem = () => {};
-  // const removeItem = () => {};
+  const clearOrder = () => {
+    setOrder({total: '0.00', time: '', size: '', phoneNumber: ''});
+  };
+  const addItem = (item) => {
+    const newOrder = {...order};
+    if (newOrder[item.name]) {
+      newOrder[item.name].numberOfItems ++;
+    } else {
+      newOrder[item.name] = {...item, numberOfItems: 1};
+    }
+    setOrder({...calculateOrder(newOrder), size: calculateSize(Number(order.total))});
+  };
+  const removeItem = (itemToRemove) => {
+    const newOrder = {...order};
+    if (newOrder[itemToRemove]) {
+      if (newOrder[itemToRemove].numberOfItems > 0) {
+        newOrder[itemToRemove].numberOfItems -= 1;
+        setOrder({...calculateOrder(newOrder), size: calculateSize(Number(order.total))});
+      }
+    }
+    return;
+  };
+  const onSetTime = async () => {
+    setOrder({...order, time: generateTimeObj(order.time, startDate).format('')});
+  };
+  const onSubmit = async () => {
+    const newOrdersOfTheDay = [...ordersOfTheDay]
+        .filter(({id: orderId}) => orderId !== id);
+    setOrdersOfTheDay([...newOrdersOfTheDay, order]);
+    window.alert('Order Updated');
+    return;
+  };
+
+  useEffect(() => {
+    if (!id) clearOrder();
+  }, []);
 
   return (
     <div className='flex flex-col h-screen'>
       <div className='flex justify-evenly bg-gray-500 p-4'>
-        <div className='text-white text-lg font-bold'>Search: </div>
-        <div className='mx-2'>
-          <input onChange={(e) => setSearch(e.target.value)}/>
+        <div>
+          <div className='text-white'>Time: </div>
+          <div className=''>
+            <input
+              onChange={(e) => setOrder({...order, time: e.target.value})}/>
+          </div>
+          <div className='text-white'>Phone Number: </div>
+          <div className=''>
+            <input onChange={(e) => setOrder({...order, phoneNumber: e.target.value})}/>
+          </div>
+          <div className='text-white'>Search: </div>
+          <div className=''>
+            <input onChange={(e) => setSearch(e.target.value)}/>
+          </div>
+        </div>
+        <div className='flex flex-col justify-evenly ml-2'>
+          <Link to='/home'>
+            <div
+              className='bg-white mt-4 rounded-md text-md text-gray-500 flex justify-center'
+            >Home</div>
+          </Link>
           <button
-            className='p-1 bg-white mt-4 rounded-md text-2xl text-gray-500'
+            className='bg-white mt-4 rounded-md text-md text-gray-500'
+            onClick={onSetTime}
+          >Set Time</button>
+          <button
+            className='bg-white mt-4 rounded-md text-md text-gray-500'
             onClick={() => setGreaterThanZero(!greaterThanZero)}
           >Current Order</button>
         </div>
@@ -96,24 +106,12 @@ const NewOrderV2 = () => {
                 <div
                   className='bg-green-300 px-6 py-1 rounded-lg'
                   onClick={
-                    () => {
-                      console.log('adding item');
-                      orderDispatch({
-                        type: ORDER_ACTION_TYPES.ADD_ITEM,
-                        item: menuItem,
-                      });
-                    }}
+                    () => addItem(menuItem)}
                 >+</div>
                 <div
                   className='bg-red-300 px-6 py-1 rounded-lg'
                   onClick={
-                    () => {
-                      console.log('removing item');
-                      orderDispatch({
-                        type: ORDER_ACTION_TYPES.REMOVE_ITEM,
-                        toRemove: menuItem.name,
-                      });
-                    }
+                    () => removeItem(menuItem.name)
                   }
                 >-</div>
               </div>
@@ -127,6 +125,12 @@ const NewOrderV2 = () => {
       <div className='flex justify-between bg-gray-500 text-white font-bold text-lg'>
         <div className='flex flex-col'>
           <div className='flex p-2'>
+            <div>Time: </div>
+            <div className='text-lg font-light'>
+              {moment(order.time).tz('America/Toronto').format('M/D/yyyy, h:mm a')}
+            </div>
+          </div>
+          <div className='flex p-2'>
             <div>SubTotal: </div>
             <div>{order.total}</div>
           </div>
@@ -135,11 +139,12 @@ const NewOrderV2 = () => {
             <div>{(Number(order.total) * 1.13).toFixed(2)}</div>
           </div>
         </div>
-        <button
-          onClick={() => {
-
-          }}
-          className='m-8 bg-white text-gray-500 rounded-md p-1 text-xl '> Submit</button>
+        <div className='flex flex-col justify-end my-auto mx-auto'>
+          <button
+            onClick={onSubmit}
+            className='bg-white text-gray-500 rounded-md text-xl p-8'> Submit
+          </button>
+        </div>
       </div>
     </div>
   );

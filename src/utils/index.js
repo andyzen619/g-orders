@@ -1,4 +1,6 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
+import Fuse from 'fuse.js';
 
 import {ORDER_SIZES} from '../constants';
 /**
@@ -50,5 +52,48 @@ export const calculateSize = (totalWithTax) => {
     return ORDER_SIZES.LARGE;
   }
   return ORDER_SIZES.EXTRA_LARGE;
+};
+
+// eslint-disable-next-line valid-jsdoc
+/**
+ * Flattens menu items and in an array.
+ * @param {*} menuItems
+ * @param {*} pattern
+ * @param {*} greaterThanZero
+ * @param {*} order
+ */
+export const flattenMenuItems = (menuItems, pattern, greaterThanZero, order) => {
+  if (!menuItems) return [];
+  if (!order) return [];
+  const combinations = Object.values(menuItems.combinations);
+  const dinners = Object.values(menuItems.dinners);
+  const dishes = [];
+
+  Object.values(menuItems.dishes).forEach((dishCategory) => {
+    Object.values(dishCategory).forEach((dish) => {
+      dishes.push(dish);
+    });
+  });
+  const flattenedMenuItems = [...combinations, ...dinners, ...dishes];
+
+  const options = {
+    keys: [
+      'name',
+    ],
+  };
+  const fuse = new Fuse(
+      flattenedMenuItems.map((menuItem) => ({
+        ...menuItem,
+        numberOfItems: order[menuItem.name]?
+          order[menuItem.name].numberOfItems :
+          '0'})),
+      options);
+  const result = fuse.search(pattern || ' ');
+
+  if (greaterThanZero) {
+    return result.filter(({item}) => item.numberOfItems > 0 )
+        .map(({item}) => item);
+  }
+  return result.map(({item}) => item);
 };
 

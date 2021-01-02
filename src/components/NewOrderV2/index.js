@@ -4,8 +4,10 @@
 import React, {useContext, useState, useEffect} from 'react';
 import {useParams, Link} from 'react-router-dom';
 import moment from 'moment-timezone';
+import {v4 as uuidv4} from 'uuid';
 
 import {NewOrderContext} from '../../context/NewOrderContext';
+import {FirebaseContext} from '../../context/FirebaseContext';
 import {calculateOrder, flattenMenuItems, generateTimeObj, calculateSize} from '../../utils';
 import {HomeContext} from '../../context/HomeContext';
 
@@ -13,6 +15,7 @@ import {HomeContext} from '../../context/HomeContext';
 const NewOrderV2 = () => {
   const {menuItems} = useContext(NewOrderContext);
   const {setOrdersOfTheDay, ordersOfTheDay, startDate} = useContext(HomeContext);
+  const {setOrder: firestoreSetOrders} = useContext(FirebaseContext);
 
   const [search, setSearch] = useState('');
   const [greaterThanZero, setGreaterThanZero] = useState(false);
@@ -47,15 +50,26 @@ const NewOrderV2 = () => {
     setOrder({...order, time: generateTimeObj(order.time, startDate).format('')});
   };
   const onSubmit = async () => {
-    const newOrdersOfTheDay = [...ordersOfTheDay]
-        .filter(({id: orderId}) => orderId !== id);
-    setOrdersOfTheDay([...newOrdersOfTheDay, order]);
-    window.alert('Order Updated');
+    await firestoreSetOrders({...order, id: uuidv4()});
+    window.alert('Order Added');
     return;
   };
 
   useEffect(() => {
-    if (!id) clearOrder();
+    if (!id) {
+      clearOrder();
+      return;
+    }
+
+    const currentOrder = ordersOfTheDay.find(({id: currentOrderId}) => currentOrderId === id );
+    if (!currentOrder) {
+      console.error(`Order ${id} not found`);
+      clearOrder();
+      return;
+    }
+    console.log(`Order ${id} found: `, currentOrder);
+    setOrder(currentOrder);
+    return;
   }, []);
 
   return (

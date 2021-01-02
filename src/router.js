@@ -3,7 +3,6 @@ import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import Home from './components/Home';
-import NewOrder from './components/NewOrder';
 
 import HomeContextProvider from './context/HomeContext';
 import NewOrderContextProvider from './context/NewOrderContext';
@@ -16,7 +15,7 @@ const router = () => {
         <Router>
           <Switch>
             <Route path='/editOrder/:id'>
-              <NewOrder/>
+              <NewOrderV2/>
             </Route>
             <Route path='/newOrder'>
               <NewOrderV2/>

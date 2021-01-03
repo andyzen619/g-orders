@@ -14,7 +14,7 @@ import {HomeContext} from '../../context/HomeContext';
 
 const NewOrderV2 = () => {
   const {menuItems} = useContext(NewOrderContext);
-  const {setOrdersOfTheDay, ordersOfTheDay, startDate} = useContext(HomeContext);
+  const {ordersOfTheDay, startDate} = useContext(HomeContext);
   const {setOrder: firestoreSetOrders} = useContext(FirebaseContext);
 
   const [search, setSearch] = useState('');
@@ -67,7 +67,7 @@ const NewOrderV2 = () => {
       clearOrder();
       return;
     }
-    console.log(`Order ${id} found: `, currentOrder);
+
     setOrder(currentOrder);
     return;
   }, []);

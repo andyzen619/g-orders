@@ -5,15 +5,29 @@ import {firestore, auth} from '../firebase';
 
 export const FirebaseContext = createContext(null);
 
+const mockCombinations = {
+  4: {
+    description: 'Beef mixed vegetables, chicken fried rice, egg roll',
+    name: '4 Combinations Plate',
+    price: '$8.95',
+  },
+};
+
 const {
   REACT_APP_EMAIL,
   REACT_APP_PASSWORD,
+  NODE_ENV,
 } = process.env;
 
 /**
  * Gets all menuItems from firestore.
  */
 const getMenuItems = async () => {
+  // for testing
+  if (NODE_ENV === 'test') {
+    return {combinations: mockCombinations, dishes: {}, dinners: {}};
+  }
+
   const snap = await firestore.collection('menu-items').get();
   const menuItems = snap.docs[0].data();
   return menuItems;

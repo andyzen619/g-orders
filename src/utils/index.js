@@ -63,37 +63,42 @@ export const calculateSize = (totalWithTax) => {
  * @param {*} order
  */
 export const flattenMenuItems = (menuItems, pattern, greaterThanZero, order) => {
-  if (!menuItems) return [];
-  if (!order) return [];
-  const combinations = Object.values(menuItems.combinations);
-  const dinners = Object.values(menuItems.dinners);
-  const dishes = [];
+  try {
+    if (!menuItems) return [];
+    if (!order) return [];
+    const combinations = Object.values(menuItems.combinations);
+    const dinners = Object.values(menuItems.dinners);
+    const dishes = [];
 
-  Object.values(menuItems.dishes).forEach((dishCategory) => {
-    Object.values(dishCategory).forEach((dish) => {
-      dishes.push(dish);
+    Object.values(menuItems.dishes).forEach((dishCategory) => {
+      Object.values(dishCategory).forEach((dish) => {
+        dishes.push(dish);
+      });
     });
-  });
-  const flattenedMenuItems = [...combinations, ...dinners, ...dishes];
+    const flattenedMenuItems = [...combinations, ...dinners, ...dishes];
 
-  const options = {
-    keys: [
-      'name',
-    ],
-  };
-  const fuse = new Fuse(
-      flattenedMenuItems.map((menuItem) => ({
-        ...menuItem,
-        numberOfItems: order[menuItem.name]?
-          order[menuItem.name].numberOfItems :
-          '0'})),
-      options);
-  const result = fuse.search(pattern || ' ');
+    const options = {
+      keys: [
+        'name',
+      ],
+    };
+    const fuse = new Fuse(
+        flattenedMenuItems.map((menuItem) => ({
+          ...menuItem,
+          numberOfItems: order[menuItem.name]?
+            order[menuItem.name].numberOfItems :
+            '0'})),
+        options);
+    const result = fuse.search(pattern || ' ');
 
-  if (greaterThanZero) {
-    return result.filter(({item}) => item.numberOfItems > 0 )
-        .map(({item}) => item);
+    if (greaterThanZero) {
+      return result.filter(({item}) => item.numberOfItems > 0 )
+          .map(({item}) => item);
+    }
+    return result.map(({item}) => item);
+  } catch (error) {
+    // console.error(error);
+    return [];
   }
-  return result.map(({item}) => item);
 };
 

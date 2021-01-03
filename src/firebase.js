@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import firebaseApp from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';

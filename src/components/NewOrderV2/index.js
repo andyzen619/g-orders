@@ -117,17 +117,19 @@ const NewOrderV2 = () => {
             </div>
             <div className='flex'>
               <div className='flex justify-between my-8 mx-2 w-36'>
-                <div
+                <button
+                  data-testid={menuItem.name === '4 Combination Plate' && 'fourComboAddButton'}
                   className='bg-green-300 px-6 py-1 rounded-lg'
                   onClick={
                     () => addItem(menuItem)}
-                >+</div>
-                <div
+                >+</button>
+                <button
+                  data-testid={menuItem.name === '4 Combination Plate' && 'fourComboRemoveButton'}
                   className='bg-red-300 px-6 py-1 rounded-lg'
                   onClick={
                     () => removeItem(menuItem.name)
                   }
-                >-</div>
+                >-</button>
               </div>
               <div className='my-8 mx-2'>
                 {menuItem.numberOfItems}

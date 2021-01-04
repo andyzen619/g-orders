@@ -79,15 +79,20 @@ const NewOrderV2 = () => {
           <div className='text-white'>Time: </div>
           <div className=''>
             <input
+              data-testid='order-time-input'
               onChange={(e) => setOrder({...order, time: e.target.value})}/>
           </div>
           <div className='text-white'>Phone Number: </div>
           <div className=''>
-            <input onChange={(e) => setOrder({...order, phoneNumber: e.target.value})}/>
+            <input
+              data-testid='order-phone-input'
+              onChange={(e) => setOrder({...order, phoneNumber: e.target.value})}/>
           </div>
           <div className='text-white'>Search: </div>
           <div className=''>
-            <input onChange={(e) => setSearch(e.target.value)}/>
+            <input
+              data-testid='order-search-input'
+              onChange={(e) => setSearch(e.target.value)}/>
           </div>
         </div>
         <div className='flex flex-col justify-evenly ml-2'>
@@ -148,11 +153,15 @@ const NewOrderV2 = () => {
           </div>
           <div className='flex p-2'>
             <div>SubTotal: </div>
-            <div>{order.total}</div>
+            <div
+              data-testid='order-sub-total'
+            >{order.total}</div>
           </div>
           <div className='flex p-2 text-4xl font-bold'>
             <div>Total: </div>
-            <div>{(Number(order.total) * 1.13).toFixed(2)}</div>
+            <div
+              data-testid='order-total'
+            >{(Number(order.total) * 1.13).toFixed(2)}</div>
           </div>
         </div>
         <div className='flex flex-col justify-end my-auto mx-auto'>

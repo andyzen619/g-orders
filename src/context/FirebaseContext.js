@@ -8,7 +8,7 @@ export const FirebaseContext = createContext(null);
 const mockCombinations = {
   4: {
     description: 'Beef mixed vegetables, chicken fried rice, egg roll',
-    name: '4 Combinations Plate',
+    name: '4 Combination Plate',
     price: '$8.95',
   },
 };

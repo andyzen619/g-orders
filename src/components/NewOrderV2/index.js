@@ -1,15 +1,17 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable valid-jsdoc */
 /* eslint-disable max-len */
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState, useEffect, useReducer} from 'react';
 import {useParams, Link} from 'react-router-dom';
 import moment from 'moment-timezone';
 import {v4 as uuidv4} from 'uuid';
 
 import {NewOrderContext} from '../../context/NewOrderContext';
 import {FirebaseContext} from '../../context/FirebaseContext';
-import {calculateOrder, flattenMenuItems, generateTimeObj, calculateSize} from '../../utils';
+import {flattenMenuItems} from '../../utils';
 import {HomeContext} from '../../context/HomeContext';
+import orderReducer from '../../reducers/OrderReducer';
+import {ORDER_ACTION_TYPES} from '../../constants';
 
 
 const NewOrderV2 = () => {
@@ -19,36 +21,10 @@ const NewOrderV2 = () => {
 
   const [search, setSearch] = useState('');
   const [greaterThanZero, setGreaterThanZero] = useState(false);
-  const [order, setOrder] = useState({total: '0.00', time: '', size: '', phoneNumber: ''});
+  const [order, dispatch] = useReducer(orderReducer, ({total: '0.00', time: '', size: '', phoneNumber: ''}));
 
   const {id} = useParams();
 
-
-  const clearOrder = () => {
-    setOrder({total: '0.00', time: '', size: '', phoneNumber: ''});
-  };
-  const addItem = (item) => {
-    const newOrder = {...order};
-    if (newOrder[item.name]) {
-      newOrder[item.name].numberOfItems ++;
-    } else {
-      newOrder[item.name] = {...item, numberOfItems: 1};
-    }
-    setOrder({...calculateOrder(newOrder), size: calculateSize(Number(order.total))});
-  };
-  const removeItem = (itemToRemove) => {
-    const newOrder = {...order};
-    if (newOrder[itemToRemove]) {
-      if (newOrder[itemToRemove].numberOfItems > 0) {
-        newOrder[itemToRemove].numberOfItems -= 1;
-        setOrder({...calculateOrder(newOrder), size: calculateSize(Number(order.total))});
-      }
-    }
-    return;
-  };
-  const onSetTime = async () => {
-    setOrder({...order, time: generateTimeObj(order.time, startDate).format('')});
-  };
   const onSubmit = async () => {
     await firestoreSetOrders({...order, id: uuidv4()});
     window.alert('Order Added');
@@ -57,7 +33,7 @@ const NewOrderV2 = () => {
 
   useEffect(() => {
     if (!id) {
-      clearOrder();
+      dispatch({type: ORDER_ACTION_TYPES.CLEAR_ORDER});
       return;
     }
 
@@ -68,7 +44,7 @@ const NewOrderV2 = () => {
       return;
     }
 
-    setOrder(currentOrder);
+    dispatch({type: ORDER_ACTION_TYPES.SET_ORDER, currentOrder});
     return;
   }, []);
 
@@ -80,13 +56,13 @@ const NewOrderV2 = () => {
           <div className=''>
             <input
               data-testid='order-time-input'
-              onChange={(e) => setOrder({...order, time: e.target.value})}/>
+              onChange={(e) => dispatch({type: ORDER_ACTION_TYPES.UPDATE_TIME, time: e.target.value})}/>
           </div>
           <div className='text-white'>Phone Number: </div>
           <div className=''>
             <input
               data-testid='order-phone-input'
-              onChange={(e) => setOrder({...order, phoneNumber: e.target.value})}/>
+              onChange={(e) => dispatch({type: ORDER_ACTION_TYPES.UPDATE_PHONE_NUMBER, time: e.target.value})}/>
           </div>
           <div className='text-white'>Search: </div>
           <div className=''>
@@ -103,7 +79,7 @@ const NewOrderV2 = () => {
           </Link>
           <button
             className='bg-white mt-4 rounded-md text-md text-gray-500'
-            onClick={onSetTime}
+            onClick={() => dispatch({type: ORDER_ACTION_TYPES.SET_TIME, startDate})}
           >Set Time</button>
           <button
             className='bg-white mt-4 rounded-md text-md text-gray-500'
@@ -126,13 +102,13 @@ const NewOrderV2 = () => {
                   data-testid={menuItem.name === '4 Combination Plate' && 'fourComboAddButton'}
                   className='bg-green-300 px-6 py-1 rounded-lg'
                   onClick={
-                    () => addItem(menuItem)}
+                    () => dispatch({type: ORDER_ACTION_TYPES.ADD_ITEM, item: menuItem})}
                 >+</button>
                 <button
                   data-testid={menuItem.name === '4 Combination Plate' && 'fourComboRemoveButton'}
                   className='bg-red-300 px-6 py-1 rounded-lg'
                   onClick={
-                    () => removeItem(menuItem.name)
+                    () => dispatch({type: ORDER_ACTION_TYPES.REMOVE_ITEM, itemToRemove: menuItem.name})
                   }
                 >-</button>
               </div>

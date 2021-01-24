@@ -23,7 +23,7 @@ const NewOrderV2View = ({states}) => {
           <div className=''>
             <input
               data-testid='order-phone-input'
-              onChange={(e) => dispatch({type: ORDER_ACTION_TYPES.UPDATE_PHONE_NUMBER, time: e.target.value})}/>
+              onChange={(e) => dispatch({type: ORDER_ACTION_TYPES.UPDATE_PHONE_NUMBER, phoneNumber: e.target.value})}/>
           </div>
           <div className='text-white'>Search: </div>
           <div className=''>

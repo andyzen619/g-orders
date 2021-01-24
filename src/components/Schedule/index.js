@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 
 import React from 'react';
 import ScheduleContainer from './ScheduleContainer';
 
-const Schedule = () => {
+const Schedule = ({states}) => {
   return (
-    <ScheduleContainer/>);
+    <ScheduleContainer states={states}/>);
 };
 
 export default Schedule;

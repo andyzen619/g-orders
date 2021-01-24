@@ -102,10 +102,11 @@ const NewOrderV2View = ({states}) => {
           </div>
         </div>
         <div className='flex flex-col justify-end my-auto mx-auto'>
-          <button
+          <Link
+            to='/'
             onClick={onSubmit}
             className='bg-white text-gray-500 rounded-md text-xl p-8'> Submit
-          </button>
+          </Link>
         </div>
       </div>
     </div>

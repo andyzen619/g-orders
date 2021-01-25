@@ -2,8 +2,8 @@
 import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
 
-import {HomeContext} from '../../context/HomeContext';
-import {FirebaseContext} from '../../context/FirebaseContext';
+import {HomeContext} from '../../../context/HomeContext';
+import {FirebaseContext} from '../../../context/FirebaseContext';
 
 const Button = ({text, color, onClick}) => {
   return (

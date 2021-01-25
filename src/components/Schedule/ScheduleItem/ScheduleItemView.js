@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import ScheduleItemButtons from '../ScheduleItemButtons';
 
-import {HomeContext} from '../../context/HomeContext';
+import {HomeContext} from '../../../context/HomeContext';
 
 const ScheduleItemView = ({time, timeSlot}) => {
   const {ordersOfTheDay, startDate} = useContext(HomeContext);

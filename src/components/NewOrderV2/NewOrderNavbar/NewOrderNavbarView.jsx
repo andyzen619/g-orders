@@ -5,7 +5,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import {ORDER_ACTION_TYPES} from '../../constants';
+import {ORDER_ACTION_TYPES} from '../../../constants';
 
 export default ({states}) => {
   const {dispatch, setGreaterThanZero, setSearch, startDate} = states;

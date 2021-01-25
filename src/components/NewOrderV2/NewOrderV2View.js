@@ -3,8 +3,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import NewOrderNavbarView from '../NewOrderNavbar';
-import NewOrderMenuPicker from '../NewOrderMenuPicker';
+import NewOrderNavbarView from './NewOrderNavbar';
+import NewOrderMenuPicker from './NewOrderMenuPicker';
 
 import moment from 'moment-timezone';
 

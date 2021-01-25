@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import ScheduleItem from '../ScheduleItem';
+import ScheduleItem from './ScheduleItem';
 
 const ScheduleView = ({hours, currentDate, states}) => {
   const {isLoading} = states;

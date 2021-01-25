@@ -9,13 +9,12 @@ const OrderReducer = (order, action) => {
     }
     case ORDER_ACTION_TYPES.ADD_ITEM: {
       const {item} = action;
-      const newOrder = {...order};
 
-      if (newOrder[item.name]) {
-        newOrder[item.name].numberOfItems ++;
-      } else {
-        newOrder[item.name] = {...item, numberOfItems: 1};
-      }
+      // add item
+      const newOrder = order[item.name] ?
+        {...order} :
+        {...order, [item.name]: {...item, numberOfItems: 0}};
+      newOrder[item.name].numberOfItems += 1;
 
       return {
         ...calculateOrder(newOrder),
@@ -26,14 +25,12 @@ const OrderReducer = (order, action) => {
       const {itemToRemove} = action;
       const newOrder = {...order};
 
-      if (newOrder[itemToRemove]) {
-        if (newOrder[itemToRemove].numberOfItems > 0) {
-          newOrder[itemToRemove].numberOfItems -= 1;
-          return {
-            ...calculateOrder(newOrder),
-            size: calculateSize(Number(order.total)),
-          };
-        }
+      if (newOrder[itemToRemove] && newOrder[itemToRemove].numberOfItems > 0) {
+        newOrder[itemToRemove].numberOfItems -= 1;
+        return {
+          ...calculateOrder(newOrder),
+          size: calculateSize(Number(order.total)),
+        };
       }
 
       return order;

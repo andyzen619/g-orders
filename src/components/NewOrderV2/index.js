@@ -12,7 +12,6 @@ import orderReducer from '../../reducers/OrderReducer';
 import {ORDER_ACTION_TYPES} from '../../constants';
 import NewOrderV2View from './NewOrderV2View';
 
-
 const NewOrderV2 = () => {
   const {menuItems} = useContext(NewOrderContext);
   const {ordersOfTheDay, startDate} = useContext(HomeContext);

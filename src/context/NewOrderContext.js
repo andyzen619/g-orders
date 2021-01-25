@@ -6,11 +6,9 @@ import React, {
   useState,
   useContext,
   useEffect,
-  useReducer,
 } from 'react';
 
 import {FirebaseContext} from './FirebaseContext';
-import orderReducer from '../reducers/OrderReducer';
 
 export const NewOrderContext = createContext(null);
 

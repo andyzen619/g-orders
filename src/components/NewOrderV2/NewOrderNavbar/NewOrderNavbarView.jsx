@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
 
@@ -10,8 +11,20 @@ export default ({states}) => {
   const {setSearch} = states;
   const allOrderState = {...states, greaterThanZero: false};
 
+  // component states
   const [showSearchResults, setShowSearchResults] = useState(false);
 
+  // methods
+  function onSearchTextChange(e) {
+    e.target.value.length?
+      setShowSearchResults(true):setShowSearchResults(false);
+
+    return setSearch(e.target.value);
+  };
+
+  function closeSearchResults() {
+    setShowSearchResults(false);
+  };
 
   return (
     <div className="flex justify-evenly bg-gray-500 p-4">
@@ -20,20 +33,24 @@ export default ({states}) => {
         <div className="flex justify-center m-2">
           <input
             data-testid="order-search-input"
-            onChange={(e) =>{
-              e.target.value.length?
-                setShowSearchResults(true):setShowSearchResults(false);
-
-              return setSearch(e.target.value);
-            }
-            }
+            onChange={onSearchTextChange}
           />
         </div>
         {showSearchResults && (
-          <div className='
+          <div
+            className='
           bg-white shadow-lg absolute
-          m-2 h-2/4 w-4/5 overflow-auto
-          '>
+            m-2 h-2/4 w-4/5 overflow-auto
+          '
+          >
+            <div className='flex w-full justify-end px-2'>
+              <div
+                className='p-2 text-red-400'
+                onClick={closeSearchResults}
+              >
+                  CLOSE
+              </div>
+            </div>
             <NewOrderMenuPicker states={allOrderState}/>
           </div>
         )}

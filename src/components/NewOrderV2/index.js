@@ -18,7 +18,7 @@ const NewOrderV2 = () => {
   const {setOrder: firestoreSetOrders} = useContext(FirebaseContext);
 
   const [search, setSearch] = useState('');
-  const [greaterThanZero, setGreaterThanZero] = useState(false);
+  const [greaterThanZero, setGreaterThanZero] = useState(true);
   const [order, dispatch] = useReducer(orderReducer, ({
     total: '0.00',
     time: '',
@@ -57,7 +57,8 @@ const NewOrderV2 = () => {
           startDate,
           search,
           setSearch,
-          greaterThanZero, setGreaterThanZero,
+          greaterThanZero,
+          setGreaterThanZero,
           onSubmit,
           order, dispatch}
       }

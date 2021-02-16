@@ -6,8 +6,6 @@ import {Link} from 'react-router-dom';
 import NewOrderNavbarView from './NewOrderNavbar';
 import NewOrderMenuPicker from './NewOrderMenuPicker';
 
-import moment from 'moment-timezone';
-
 const NewOrderV2View = ({states}) => {
   const {order, onSubmit} = states;
   return (
@@ -16,12 +14,6 @@ const NewOrderV2View = ({states}) => {
       <NewOrderMenuPicker states={states}/>
       <div className='flex justify-between bg-gray-500 text-white font-bold text-lg'>
         <div className='flex flex-col'>
-          <div className='flex p-2'>
-            <div>Time: </div>
-            <div className='text-lg font-light'>
-              {moment(order.time).tz('America/Toronto').format('M/D/yyyy, h:mm a')}
-            </div>
-          </div>
           <div className='flex p-2'>
             <div>SubTotal: </div>
             <div
@@ -39,7 +31,9 @@ const NewOrderV2View = ({states}) => {
           <Link
             to='/'
             onClick={onSubmit}
-            className='bg-white text-gray-500 rounded-md text-xl p-8'> Submit
+            className='bg-white text-gray-500 rounded-md text-xl p-4'
+          >
+          Submit
           </Link>
         </div>
       </div>

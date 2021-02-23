@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import NewOrderNavbarView from './NewOrderNavbar';
@@ -8,11 +8,13 @@ import NewOrderMenuPicker from './NewOrderMenuPicker';
 
 const NewOrderV2View = ({states}) => {
   const {order, onSubmit} = states;
+  const [viewHeight] = useState(window.innerHeight);
+
   return (
-    <div className='flex flex-col h-screen'>
+    <div className='flex flex-col' style={{height: `${viewHeight}px`}}>
       <NewOrderNavbarView states={states}/>
       <NewOrderMenuPicker states={states}/>
-      <div className='flex justify-between bg-gray-500 text-white font-bold text-lg'>
+      <div className='relative flex justify-between bg-gray-500 text-white font-bold text-lg'>
         <div className='flex flex-col'>
           <div className='flex p-2'>
             <div>SubTotal: </div>

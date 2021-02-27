@@ -22,7 +22,7 @@ const {
 /**
  * Gets all menuItems from firestore.
  */
-const getMenuItems = async () => {
+export const getMenuItems = async () => {
   // for testing
   if (NODE_ENV === 'test') {
     return {combinations: mockCombinations, dishes: {}, dinners: {}};
@@ -33,7 +33,7 @@ const getMenuItems = async () => {
   return menuItems;
 };
 
-const setOrder = async (order) => {
+export const setOrder = async (order) => {
   try {
     await auth.signInWithEmailAndPassword(REACT_APP_EMAIL, REACT_APP_PASSWORD);
     const {id} = order;
@@ -43,7 +43,7 @@ const setOrder = async (order) => {
   }
 };
 
-const removeOrder = async (id) => {
+export const removeOrder = async (id) => {
   try {
     await auth.signInWithEmailAndPassword(REACT_APP_EMAIL, REACT_APP_PASSWORD);
 
@@ -53,8 +53,9 @@ const removeOrder = async (id) => {
   }
 };
 
-const getOrders = async () => {
+export const getOrders = async () => {
   try {
+    console.log('getting ordes');
     await auth.signInWithEmailAndPassword(REACT_APP_EMAIL, REACT_APP_PASSWORD);
     const snap = await firestore.collection('orders').get();
     const orders = snap.docs.map((doc) => doc.data());

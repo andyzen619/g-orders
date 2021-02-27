@@ -1,12 +1,10 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
+import moment from 'moment';
 
 import DateButtonView from './DateButtonView';
 
-import {HomeContext} from '../../context/HomeContext';
-
 const DateButton = () => {
-  const {startDate, setStartDate} = useContext(HomeContext);
-
+  const [startDate, setStartDate] = useState(moment());
   const [showCalender, setShowCalendar] = useState(false);
 
   return (

@@ -4,14 +4,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
-import FirebaseContextProvider from './context/FirebaseContext';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 
 ReactDOM.render(
-    <FirebaseContextProvider>
-      <App />
-    </FirebaseContextProvider>
+    <App />
     ,
     document.getElementById('root'),
 );

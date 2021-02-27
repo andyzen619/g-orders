@@ -1,5 +1,8 @@
 import React from 'react';
+import {QueryClient, QueryClientProvider} from 'react-query';
 import Router from '../../router';
+
+const queryClient = new QueryClient();
 
 /**
  * The main component that houses that app.
@@ -8,7 +11,9 @@ import Router from '../../router';
 function App() {
   return (
     <div>
-      <Router/>
+      <QueryClientProvider client={queryClient}>
+        <Router />
+      </QueryClientProvider>
     </div>
   );
 }

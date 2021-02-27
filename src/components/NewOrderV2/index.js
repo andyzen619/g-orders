@@ -1,22 +1,16 @@
 /* eslint-disable max-len */
 /* eslint-disable valid-jsdoc */
 
-import React, {useContext, useState, useEffect, useReducer} from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 import {useParams} from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
 
-import {NewOrderContext} from '../../context/NewOrderContext';
-import {FirebaseContext} from '../../context/FirebaseContext';
-import {HomeContext} from '../../context/HomeContext';
+import {setOrder} from '../../context/FirebaseContext';
 import orderReducer from '../../reducers/OrderReducer';
 import {ORDER_ACTION_TYPES} from '../../constants';
 import NewOrderV2View from './NewOrderV2View';
 
 const NewOrderV2 = () => {
-  const {menuItems} = useContext(NewOrderContext);
-  const {ordersOfTheDay, startDate} = useContext(HomeContext);
-  const {setOrder: firestoreSetOrders} = useContext(FirebaseContext);
-
   const [search, setSearch] = useState('');
   const [greaterThanZero, setGreaterThanZero] = useState(true);
   const [order, dispatch] = useReducer(orderReducer, ({
@@ -28,7 +22,7 @@ const NewOrderV2 = () => {
   const {id} = useParams();
 
   const onSubmit = async () => {
-    await firestoreSetOrders({...order, id: uuidv4()});
+    await setOrder({...order, id: uuidv4()});
     window.alert('Order Added');
     return;
   };
@@ -53,8 +47,7 @@ const NewOrderV2 = () => {
   return (
     <NewOrderV2View
       states={
-        {menuItems,
-          startDate,
+        {
           search,
           setSearch,
           greaterThanZero,

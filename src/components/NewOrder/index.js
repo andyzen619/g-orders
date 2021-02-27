@@ -8,9 +8,9 @@ import {v4 as uuidv4} from 'uuid';
 import {setOrder} from '../../context/FirebaseContext';
 import orderReducer from '../../reducers/OrderReducer';
 import {ORDER_ACTION_TYPES} from '../../constants';
-import NewOrderV2View from './NewOrderV2View';
+import NewOrderView from './NewOrderView';
 
-const NewOrderV2 = () => {
+const NewOrder = () => {
   const [search, setSearch] = useState('');
   const [greaterThanZero, setGreaterThanZero] = useState(true);
   const [order, dispatch] = useReducer(orderReducer, ({
@@ -45,7 +45,7 @@ const NewOrderV2 = () => {
   }, []);
 
   return (
-    <NewOrderV2View
+    <NewOrderView
       states={
         {
           search,
@@ -59,4 +59,4 @@ const NewOrderV2 = () => {
   );
 };
 
-export default NewOrderV2;
+export default NewOrder;

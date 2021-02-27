@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 import NewOrderNavbarView from './NewOrderNavbar';
 import NewOrderMenuPicker from './NewOrderMenuPicker';
 
-const NewOrderV2View = ({states}) => {
+const NewOrderView = ({states}) => {
   const {order, onSubmit} = states;
   const [viewHeight] = useState(window.innerHeight);
 
@@ -43,4 +43,4 @@ const NewOrderV2View = ({states}) => {
   );
 };
 
-export default NewOrderV2View;
+export default NewOrderView;

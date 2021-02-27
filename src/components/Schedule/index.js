@@ -1,7 +1,7 @@
 import React from 'react';
 import {useQuery} from 'react-query';
 
-import View from './ScheduleV2View';
+import View from './ScheduleView';
 import {getOrders} from '../../context/FirebaseContext';
 
 const Schedule = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import DateButton from '../DateButton';
-import Schedule from '../ScheduleV2';
+import Schedule from '../Schedule';
 import NewOrderButton from '../NewOrderButton';
 
 const Home = () => {

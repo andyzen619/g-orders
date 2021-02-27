@@ -3,7 +3,7 @@ import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import Home from './components/Home';
-import NewOrderV2 from './components/NewOrderV2';
+import NewOrder from './components/NewOrder';
 
 const router = () => {
   return (
@@ -11,10 +11,10 @@ const router = () => {
     <Router>
       <Switch>
         <Route path='/editOrder/:id'>
-          <NewOrderV2/>
+          <NewOrder/>
         </Route>
         <Route path='/newOrder'>
-          <NewOrderV2/>
+          <NewOrder/>
         </Route>
         <Route path='/'>
           <Home/>

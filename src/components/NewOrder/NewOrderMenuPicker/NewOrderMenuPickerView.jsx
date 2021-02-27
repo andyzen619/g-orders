@@ -8,10 +8,8 @@ import {ORDER_ACTION_TYPES} from '../../../constants';
 
 export default ({states, getMenuItems}) => {
   const {dispatch, search, greaterThanZero, order} = states;
-  const {isLoading, error, data: menuItems} = getMenuItems;
-
-  if (isLoading) return <div>...is loading</div>;
-  if (error) return <div>{error}</div>;
+  const {error, data: menuItems} = getMenuItems;
+  if (error) console.log(error);
 
   return (
     <div className="overflow-y-auto h-full">

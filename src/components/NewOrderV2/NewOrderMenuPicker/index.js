@@ -5,14 +5,14 @@ import {useQuery} from 'react-query';
 import NewOrderMenuPickerView from './NewOrderMenuPickerView';
 import {getMenuItems} from '../../../context/FirebaseContext';
 const NewOrderMenuPicker = ({states}) => {
-  const {isLoading, error, data} = useQuery(
-      'allMenuItems',
-      () => getMenuItems,
+  const query = useQuery(
+      'getMenuItems',
+      () => getMenuItems(),
   );
   return (
     <NewOrderMenuPickerView
       states={states}
-      allMenuItems={(isLoading, error, data)}
+      getMenuItems={query}
     />
   );
 };

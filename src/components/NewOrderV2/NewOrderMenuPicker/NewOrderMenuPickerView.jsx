@@ -6,9 +6,13 @@ import React from 'react';
 import {flattenMenuItems} from '../../../utils';
 import {ORDER_ACTION_TYPES} from '../../../constants';
 
-export default ({states, allMenuItems}) => {
+export default ({states, getMenuItems}) => {
   const {dispatch, search, greaterThanZero, order} = states;
-  const {data: menuItems} = allMenuItems;
+  const {isLoading, error, data: menuItems} = getMenuItems;
+
+  if (isLoading) return <div>...is loading</div>;
+  if (error) return <div>{error}</div>;
+
   return (
     <div className="overflow-y-auto h-full">
       {flattenMenuItems(menuItems, search, greaterThanZero, order).map(

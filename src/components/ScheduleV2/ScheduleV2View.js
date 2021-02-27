@@ -2,13 +2,12 @@
 import React from 'react';
 
 const ScheduleView2 = ({state}) => {
-  const {isLoading,
-    error,
-    data} = state;
+  const {isLoading, error, data} = state;
+
+  if (isLoading) return <div>...is loading</div>;
+  if (error) return <div>{error}</div>;
   return (
     <div>
-      {isLoading && <div>...isLoading</div>}
-      {error && <div>{error}</div>}
       {data && (
         <div>
           {data.map(({phoneNumber}, i) => (

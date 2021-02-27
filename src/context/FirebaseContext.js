@@ -55,7 +55,6 @@ export const removeOrder = async (id) => {
 
 export const getOrders = async () => {
   try {
-    console.log('getting ordes');
     await auth.signInWithEmailAndPassword(REACT_APP_EMAIL, REACT_APP_PASSWORD);
     const snap = await firestore.collection('orders').get();
     const orders = snap.docs.map((doc) => doc.data());

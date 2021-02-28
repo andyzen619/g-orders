@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
 
 import NewOrderNavbarView from './NewOrderNavbar';
 import NewOrderMenuPicker from './NewOrderMenuPicker';
 
 const NewOrderView = ({states}) => {
-  const {order, onSubmit} = states;
+  const {order, onConfirm} = states;
   const [viewHeight] = useState(window.innerHeight);
 
   return (
@@ -22,7 +21,7 @@ const NewOrderView = ({states}) => {
               data-testid='order-sub-total'
             >{order.total}</div>
           </div>
-          <div className='flex p-2 text-4xl font-bold'>
+          <div className='flex p-2 text-3xl font-bold'>
             <div>Total: </div>
             <div
               data-testid='order-total'
@@ -30,13 +29,12 @@ const NewOrderView = ({states}) => {
           </div>
         </div>
         <div className='flex flex-col justify-end my-auto mx-auto'>
-          <Link
-            to='/'
-            onClick={onSubmit}
-            className='bg-white text-gray-500 rounded-md text-xl p-4'
+          <div
+            className='bg-white text-gray-500 rounded-md text-LG p-2'
+            onClick={onConfirm}
           >
-          Submit
-          </Link>
+          CONFIRM
+          </div>
         </div>
       </div>
     </div>

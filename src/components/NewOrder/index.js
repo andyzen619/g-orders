@@ -9,6 +9,7 @@ import {setOrder} from '../../context/FirebaseContext';
 import orderReducer from '../../reducers/OrderReducer';
 import {ORDER_ACTION_TYPES} from '../../constants';
 import NewOrderView from './NewOrderView';
+import Confirm from './Confirm';
 
 const NewOrder = () => {
   const [search, setSearch] = useState('');
@@ -18,6 +19,7 @@ const NewOrder = () => {
     time: '',
     size: '',
     phoneNumber: ''}));
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const {id} = useParams();
 
@@ -25,6 +27,11 @@ const NewOrder = () => {
     await setOrder({...order, id: uuidv4()});
     window.alert('Order Added');
     return;
+  };
+
+  const onConfirm = () => {
+    console.log('confirmed!!');
+    setShowConfirm(!showConfirm);
   };
 
   useEffect(() => {
@@ -45,17 +52,29 @@ const NewOrder = () => {
   }, []);
 
   return (
-    <NewOrderView
-      states={
-        {
-          search,
-          setSearch,
-          greaterThanZero,
-          setGreaterThanZero,
-          onSubmit,
-          order, dispatch}
-      }
-    />
+    <div>
+      <NewOrderView
+        states={
+          {
+            search,
+            setSearch,
+            greaterThanZero,
+            setGreaterThanZero,
+            order,
+            onConfirm,
+            dispatch,
+          }
+        }/>
+      {showConfirm && (
+        <Confirm states={
+          {
+            onSubmit,
+            order,
+            onConfirm,
+          }
+        }/>
+      )}
+    </div>
   );
 };
 

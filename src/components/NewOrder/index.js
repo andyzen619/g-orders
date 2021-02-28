@@ -52,7 +52,11 @@ const NewOrder = () => {
   }, []);
 
   return (
-    <div>
+    <div className={
+      `
+      relative
+      `
+    }>
       <NewOrderView
         states={
           {

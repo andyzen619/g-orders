@@ -13,7 +13,7 @@ const router = () => {
         <Route path='/editOrder/:id'>
           <NewOrder/>
         </Route>
-        <Route path='/newOrder'>
+        <Route path='/newOrder/:startDate'>
           <NewOrder/>
         </Route>
         <Route path='/'>

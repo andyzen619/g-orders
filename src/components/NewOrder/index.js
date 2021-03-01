@@ -10,6 +10,7 @@ import orderReducer from '../../reducers/OrderReducer';
 import {ORDER_ACTION_TYPES} from '../../constants';
 import NewOrderView from './NewOrderView';
 import ConfirmOrder from '../ConfirmOrder';
+import {generateTimeObj} from '../../utils';
 
 const NewOrder = () => {
   const [search, setSearch] = useState('');
@@ -22,14 +23,21 @@ const NewOrder = () => {
   });
   const [showConfirm, setShowConfirm] = useState(false);
 
-  const {id} = useParams();
+  const {id, startDate} = useParams();
 
   const onSubmit = async () => {
-    // set proper timestamp
+    try {
+      // set proper timestamp
+      const orderTime = await generateTimeObj(order.time, startDate);
+      console.log(orderTime);
 
-    await setOrder({...order, id: uuidv4()});
-    window.alert('Order Added');
-    return;
+      await setOrder({...order, id: uuidv4(), time: orderTime});
+      window.alert('Order Added');
+      return;
+    } catch (error) {
+      console.error(error);
+      return;
+    }
   };
 
   const onConfirm = () => {

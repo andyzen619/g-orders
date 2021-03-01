@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import {ORDER_ACTION_TYPES} from '../../constants';
 import View from './ConfirmOrderView';
 
 const ConfirmOrder = ({states}) => {

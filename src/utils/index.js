@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import Fuse from 'fuse.js';
+import moment from 'moment';
 
 import {ORDER_SIZES} from '../constants';
 /**
@@ -28,14 +29,13 @@ export const calculateOrder = (order) => {
 export const generateTimeObj = (time, date) => {
   try {
     const [hour, minute] = time.split(':');
-    const startDate = date;
+    const startDate = moment(date);
 
     startDate.hour(12 + Number(hour));
     startDate.minute(Number(minute));
 
-    return startDate;
+    return startDate.format('');
   } catch (error) {
-    console.error(error);
     throw new Error(error);
   }
 };

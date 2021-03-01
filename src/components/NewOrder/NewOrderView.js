@@ -14,14 +14,14 @@ const NewOrderView = ({states}) => {
       <NewOrderNavbarView states={states}/>
       <NewOrderMenuPicker states={states}/>
       <div className='relative flex justify-between bg-gray-500 text-white font-bold text-lg'>
-        <div className='flex flex-col'>
-          <div className='flex p-2'>
+        <div className='flex flex-col w-5/7'>
+          <div className='flex pl-8  p-2'>
             <div>SubTotal: </div>
             <div
               data-testid='order-sub-total'
             >{order.total}</div>
           </div>
-          <div className='flex p-2 text-3xl font-bold'>
+          <div className='flex pl-8 p-2 text-3xl font-bold'>
             <div>Total: </div>
             <div
               data-testid='order-total'
@@ -30,10 +30,10 @@ const NewOrderView = ({states}) => {
         </div>
         <div className='flex flex-col justify-end my-auto mx-auto'>
           <div
-            className='bg-white text-gray-500 rounded-md text-LG p-2'
+            className='bg-white text-gray-500 rounded-md text-sm p-4'
             onClick={onConfirm}
           >
-          CONFIRM
+          Confirm
           </div>
         </div>
       </div>

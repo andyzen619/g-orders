@@ -7,7 +7,11 @@ const ScheduleView2 = ({state}) => {
   if (isLoading) return <div>...is loading</div>;
   if (error) return <div>{error}</div>;
   return (
-    <div>
+    <div className={
+      `
+      h-full
+      `
+    }>
       {data && (
         <div>
           {data.map(({phoneNumber}, i) => (

@@ -71,7 +71,7 @@ const NewOrder = () => {
         }}
       />
       {showConfirm && (
-        <ConfirmOrder states={{onConfirm, onSubmit}}/>
+        <ConfirmOrder states={{onConfirm, onSubmit, dispatch}}/>
       )}
     </div>
   );

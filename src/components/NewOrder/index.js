@@ -9,16 +9,17 @@ import {setOrder} from '../../context/FirebaseContext';
 import orderReducer from '../../reducers/OrderReducer';
 import {ORDER_ACTION_TYPES} from '../../constants';
 import NewOrderView from './NewOrderView';
-import Confirm from './Confirm';
+import ConfirmOrder from '../ConfirmOrder';
 
 const NewOrder = () => {
   const [search, setSearch] = useState('');
   const [greaterThanZero, setGreaterThanZero] = useState(true);
-  const [order, dispatch] = useReducer(orderReducer, ({
+  const [order, dispatch] = useReducer(orderReducer, {
     total: '0.00',
     time: '',
     size: '',
-    phoneNumber: ''}));
+    phoneNumber: '',
+  });
   const [showConfirm, setShowConfirm] = useState(false);
 
   const {id} = useParams();
@@ -30,7 +31,6 @@ const NewOrder = () => {
   };
 
   const onConfirm = () => {
-    console.log('confirmed!!');
     setShowConfirm(!showConfirm);
   };
 
@@ -40,7 +40,9 @@ const NewOrder = () => {
       return;
     }
 
-    const currentOrder = ordersOfTheDay.find(({id: currentOrderId}) => currentOrderId === id );
+    const currentOrder = ordersOfTheDay.find(
+        ({id: currentOrderId}) => currentOrderId === id,
+    );
     if (!currentOrder) {
       console.error(`Order ${id} not found`);
       clearOrder();
@@ -52,31 +54,24 @@ const NewOrder = () => {
   }, []);
 
   return (
-    <div className={
-      `
+    <div
+      className={`
       relative
-      `
-    }>
+      `}
+    >
       <NewOrderView
-        states={
-          {
-            search,
-            setSearch,
-            greaterThanZero,
-            setGreaterThanZero,
-            order,
-            onConfirm,
-            dispatch,
-          }
-        }/>
+        states={{
+          search,
+          setSearch,
+          greaterThanZero,
+          setGreaterThanZero,
+          order,
+          onConfirm,
+          dispatch,
+        }}
+      />
       {showConfirm && (
-        <Confirm states={
-          {
-            onSubmit,
-            order,
-            onConfirm,
-          }
-        }/>
+        <ConfirmOrder states={{onConfirm, onSubmit}}/>
       )}
     </div>
   );

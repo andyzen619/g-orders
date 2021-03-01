@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import {ORDER_ACTION_TYPES} from '../../constants';
 
 import Modal from '../Modal';
 
 const View = ({states}) => {
-  const {onConfirm, onSubmit, dispatch} = states;
+  const {onConfirm, onSubmit, onUpdatePhone, onUpdateTime} = states;
 
   return (
     <Modal>
@@ -17,12 +16,7 @@ const View = ({states}) => {
             className={`
           border-b-2 border-gray-500
           `}
-            onChange={(e) => {
-              dispatch({
-                type: ORDER_ACTION_TYPES.UPDATE_PHONE_NUMBER,
-                phoneNumber: e.currentTarget.value,
-              });
-            }}
+            onChange={onUpdatePhone}
           />
         </div>
         <div className={`my-2`}>
@@ -31,12 +25,7 @@ const View = ({states}) => {
             className={`
           border-b-2 border-gray-500
           `}
-            onChange={(e) => {
-              dispatch({
-                type: ORDER_ACTION_TYPES.UPDATE_TIME,
-                time: e.currentTarget.value,
-              });
-            }}
+            onChange={onUpdateTime}
           />
         </div>
       </div>

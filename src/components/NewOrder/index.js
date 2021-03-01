@@ -25,6 +25,8 @@ const NewOrder = () => {
   const {id} = useParams();
 
   const onSubmit = async () => {
+    // set proper timestamp
+
     await setOrder({...order, id: uuidv4()});
     window.alert('Order Added');
     return;

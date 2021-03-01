@@ -3,7 +3,22 @@ import React from 'react';
 import View from './ConfirmOrderView';
 
 const ConfirmOrder = ({states}) => {
-  return (<View states={states}/>);
+  const {dispatch} = states;
+
+  const onUpdatePhone = (e) => {
+    dispatch({
+      type: ORDER_ACTION_TYPES.UPDATE_PHONE_NUMBER,
+      phoneNumber: e.currentTarget.value,
+    });
+  };
+  const onUpdateTime = (e) => {
+    dispatch({
+      type: ORDER_ACTION_TYPES.UPDATE_TIME,
+      time: e.currentTarget.value,
+    });
+  };
+
+  return (<View states={{...states, onUpdatePhone, onUpdateTime}}/>);
 };
 
 export default ConfirmOrder;

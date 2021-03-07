@@ -26,7 +26,8 @@ const NewOrder = () => {
   });
   const [showConfirm, setShowConfirm] = useState(false);
 
-  useQuery('getOrder', async () => {
+  // set current order on screen
+  const {isLoading, error} = useQuery('getOrder', async () => {
     const [currentOrder] = await getOrders({id});
     dispatch({type: ORDER_ACTION_TYPES.SET_ORDER, currentOrder});
   });
@@ -60,19 +61,11 @@ const NewOrder = () => {
       dispatch({type: ORDER_ACTION_TYPES.CLEAR_ORDER});
       return;
     }
-
-    // fetch order
-    // const currentOrder = ordersOfTheDay.find(
-    //     ({id: currentOrderId}) => currentOrderId === id,
-    // );
-    // if (!currentOrder) {
-    //   console.error(`Order ${id} not found`);
-    //   clearOrder();
-    //   return;
-    // }
-    // dispatch({type: ORDER_ACTION_TYPES.SET_ORDER, currentOrder});
     return;
   }, []);
+
+  if (isLoading) return <div>...is loading</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div

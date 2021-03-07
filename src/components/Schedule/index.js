@@ -5,7 +5,7 @@ import View from './ScheduleView';
 import {getOrders} from '../../context/FirebaseContext';
 
 const Schedule = () => {
-  const query = useQuery('getOrders', () => getOrders());
+  const query = useQuery('getOrders', () => getOrders({id: null}));
   return <View state={query} />;
 };
 

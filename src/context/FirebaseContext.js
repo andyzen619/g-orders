@@ -13,11 +13,7 @@ const mockCombinations = {
   },
 };
 
-const {
-  REACT_APP_EMAIL,
-  REACT_APP_PASSWORD,
-  NODE_ENV,
-} = process.env;
+const {REACT_APP_EMAIL, REACT_APP_PASSWORD, NODE_ENV} = process.env;
 
 /**
  * Gets all menuItems from firestore.
@@ -53,12 +49,23 @@ export const removeOrder = async (id) => {
   }
 };
 
-export const getOrders = async () => {
+/**
+ * Get all orders. If id is provided, get single order.
+ * @return {array} - An array of orders.
+ */
+export const getOrders = async ({id: orderId}) => {
   try {
     await auth.signInWithEmailAndPassword(REACT_APP_EMAIL, REACT_APP_PASSWORD);
-    const snap = await firestore.collection('orders').get();
-    const orders = snap.docs.map((doc) => doc.data());
-    return orders;
+
+    let ref = firestore.collection('orders');
+    if (orderId) {
+      ref = firestore.collection('orders').doc(orderId);
+    }
+    const snap = await ref.get();
+
+    return snap.docs ?
+      snap.docs.map((doc) => doc.data()) :
+      [snap.data()];
   } catch (error) {
     console.error(error);
   }
@@ -66,13 +73,17 @@ export const getOrders = async () => {
 
 const FirebaseContextProvider = (props) => {
   return (
-    <FirebaseContext.Provider value={{
-      getMenuItems, setOrder, getOrders, removeOrder,
-    }}>
+    <FirebaseContext.Provider
+      value={{
+        getMenuItems,
+        setOrder,
+        getOrders,
+        removeOrder,
+      }}
+    >
       {props.children}
     </FirebaseContext.Provider>
   );
 };
 
 export default FirebaseContextProvider;
-

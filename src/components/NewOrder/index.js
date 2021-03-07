@@ -4,8 +4,9 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import {useParams} from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
+import {useQuery} from 'react-query';
 
-import {setOrder} from '../../context/FirebaseContext';
+import {setOrder, getOrders} from '../../context/FirebaseContext';
 import orderReducer from '../../reducers/OrderReducer';
 import {ORDER_ACTION_TYPES} from '../../constants';
 import NewOrderView from './NewOrderView';
@@ -13,6 +14,8 @@ import ConfirmOrder from '../ConfirmOrder';
 import {calculateOrderTotal, generateTimeObj} from '../../utils';
 
 const NewOrder = () => {
+  const {id, startDate} = useParams();
+
   const [search, setSearch] = useState('');
   const [greaterThanZero, setGreaterThanZero] = useState(true);
   const [order, dispatch] = useReducer(orderReducer, {
@@ -23,14 +26,22 @@ const NewOrder = () => {
   });
   const [showConfirm, setShowConfirm] = useState(false);
 
-  const {id, startDate} = useParams();
+  useQuery('getOrder', async () => {
+    const [currentOrder] = await getOrders({id});
+    dispatch({type: ORDER_ACTION_TYPES.SET_ORDER, currentOrder});
+  });
 
   const onSubmit = async () => {
     try {
       // set proper timestamp
       const orderTime = await generateTimeObj(order.time, startDate);
 
-      await setOrder({...order, id: uuidv4(), time: orderTime, totalWithTax: calculateOrderTotal(order.total)});
+      await setOrder({
+        ...order,
+        id: uuidv4(),
+        time: orderTime,
+        totalWithTax: calculateOrderTotal(order.total),
+      });
       window.alert('Order Added');
       return;
     } catch (error) {
@@ -50,16 +61,16 @@ const NewOrder = () => {
       return;
     }
 
-    const currentOrder = ordersOfTheDay.find(
-        ({id: currentOrderId}) => currentOrderId === id,
-    );
-    if (!currentOrder) {
-      console.error(`Order ${id} not found`);
-      clearOrder();
-      return;
-    }
-
-    dispatch({type: ORDER_ACTION_TYPES.SET_ORDER, currentOrder});
+    // fetch order
+    // const currentOrder = ordersOfTheDay.find(
+    //     ({id: currentOrderId}) => currentOrderId === id,
+    // );
+    // if (!currentOrder) {
+    //   console.error(`Order ${id} not found`);
+    //   clearOrder();
+    //   return;
+    // }
+    // dispatch({type: ORDER_ACTION_TYPES.SET_ORDER, currentOrder});
     return;
   }, []);
 
@@ -81,7 +92,7 @@ const NewOrder = () => {
         }}
       />
       {showConfirm && (
-        <ConfirmOrder states={{onConfirm, onSubmit, dispatch}}/>
+        <ConfirmOrder states={{onConfirm, onSubmit, dispatch}} />
       )}
     </div>
   );

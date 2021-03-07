@@ -5,6 +5,11 @@ export const ORDER_SIZES = {
   EXTRA_LARGE: 'EL',
 };
 
+export const DATE_FORMAT = {
+  DATE_WITH_TIME: 'dddd, MMMM Do YYYY, h:mm:ss a',
+  TIME: 'h:mm:ss a',
+};
+
 export const ORDER_ACTION_TYPES = {
   ADD_ITEM: 'ADD_ITEM',
   REMOVE_ITEM: 'REMOVE_ITEM',

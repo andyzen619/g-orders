@@ -10,7 +10,7 @@ import orderReducer from '../../reducers/OrderReducer';
 import {ORDER_ACTION_TYPES} from '../../constants';
 import NewOrderView from './NewOrderView';
 import ConfirmOrder from '../ConfirmOrder';
-import {generateTimeObj} from '../../utils';
+import {calculateOrderTotal, generateTimeObj} from '../../utils';
 
 const NewOrder = () => {
   const [search, setSearch] = useState('');
@@ -29,9 +29,8 @@ const NewOrder = () => {
     try {
       // set proper timestamp
       const orderTime = await generateTimeObj(order.time, startDate);
-      console.log(orderTime);
 
-      await setOrder({...order, id: uuidv4(), time: orderTime});
+      await setOrder({...order, id: uuidv4(), time: orderTime, totalWithTax: calculateOrderTotal(order.total)});
       window.alert('Order Added');
       return;
     } catch (error) {
@@ -42,6 +41,7 @@ const NewOrder = () => {
 
   const onConfirm = () => {
     setShowConfirm(!showConfirm);
+    return;
   };
 
   useEffect(() => {

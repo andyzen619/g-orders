@@ -26,6 +26,14 @@ export const calculateOrder = (order) => {
   return {...order, total: orderTotal.toFixed(2)};
 };
 
+/**
+ * Given an order sub total amount.
+ * @param {string} subTotal - Sub total of order.
+ * @return {string} - Total with tax included.
+ */
+export const calculateOrderTotal = (subTotal) =>
+  (Number(subTotal) * 1.13).toFixed(2).toString();
+
 export const generateTimeObj = (time, date) => {
   try {
     const [hour, minute] = time.split(':');

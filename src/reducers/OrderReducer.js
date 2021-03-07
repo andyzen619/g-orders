@@ -1,6 +1,11 @@
 /* eslint-disable no-unused-vars */
 import {ORDER_ACTION_TYPES} from '../constants';
-import {calculateOrder, calculateSize, generateTimeObj} from '../utils';
+import {
+  calculateOrder,
+  calculateOrderTotal,
+  calculateSize,
+  generateTimeObj,
+} from '../utils';
 
 const OrderReducer = (order, action) => {
   switch (action.type) {
@@ -53,6 +58,13 @@ const OrderReducer = (order, action) => {
     case ORDER_ACTION_TYPES.SET_ORDER: {
       const {currentOrder} = action;
       return {...currentOrder};
+    }
+    case ORDER_ACTION_TYPES.SET_TOTAL_WITH_TAX: {
+      const {orderSubTotal} = action;
+
+      const total = calculateOrderTotal(orderSubTotal);
+      const newOrder = {...order, total};
+      return newOrder;
     }
     default: {
       return state;

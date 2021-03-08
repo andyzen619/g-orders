@@ -53,11 +53,11 @@ export const removeOrder = async (id) => {
  * Get all orders. If id is provided, get single order.
  * @return {array} - An array of orders.
  */
-export const getOrders = async ({id: orderId}) => {
+export const getOrders = async ({id: orderId, startDate}) => {
   try {
     await auth.signInWithEmailAndPassword(REACT_APP_EMAIL, REACT_APP_PASSWORD);
-
     let ref = firestore.collection('orders');
+
     if (orderId) {
       ref = firestore.collection('orders').doc(orderId);
     }

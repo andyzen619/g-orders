@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <div className="flex flex-col w-screen h-screen justify-between">
       <DateButton states={{startDate, setStartDate}}/>
-      <Schedule/>
+      <Schedule states={{startDate}}/>
       <NewOrderButton states={{startDate}} />
     </div>
 

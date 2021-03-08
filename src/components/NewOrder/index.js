@@ -40,6 +40,7 @@ const NewOrder = () => {
       // set proper timestamp
       const orderTime = await generateTimeObj(order.time, startDate);
 
+      // add order to db
       await setOrder({
         ...order,
         id: uuidv4(),
@@ -54,11 +55,13 @@ const NewOrder = () => {
     }
   };
 
+  // show confirmation modal.
   const onConfirm = () => {
     setShowConfirm(!showConfirm);
     return;
   };
 
+  // if new order, clear order
   useEffect(() => id && dispatch({type: ORDER_ACTION_TYPES.CLEAR_ORDER}), []);
 
   return (

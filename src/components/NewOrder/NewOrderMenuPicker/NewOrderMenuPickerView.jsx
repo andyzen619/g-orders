@@ -6,7 +6,7 @@ import React from 'react';
 import {flattenMenuItems} from '../../../utils';
 import {ORDER_ACTION_TYPES} from '../../../constants';
 
-export default ({states, getMenuItems}) => {
+export default ({states, getMenuItems, query}) => {
   const {dispatch, search, greaterThanZero, order} = states;
   const {error, data: menuItems} = getMenuItems;
   if (error) console.log(error);

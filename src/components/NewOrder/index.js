@@ -27,9 +27,12 @@ const NewOrder = () => {
   const [showConfirm, setShowConfirm] = useState(false);
 
   // set current order on screen
-  const {isLoading, error} = useQuery('getOrder', async () => {
-    const [currentOrder] = await getOrders({id});
-    dispatch({type: ORDER_ACTION_TYPES.SET_ORDER, currentOrder});
+  useQuery('getOrder', async () => {
+    if (id) {
+      const [currentOrder] = await getOrders({id});
+      dispatch({type: ORDER_ACTION_TYPES.SET_ORDER, currentOrder});
+      return;
+    }
   });
 
   const onSubmit = async () => {
@@ -56,16 +59,7 @@ const NewOrder = () => {
     return;
   };
 
-  useEffect(() => {
-    if (!id) {
-      dispatch({type: ORDER_ACTION_TYPES.CLEAR_ORDER});
-      return;
-    }
-    return;
-  }, []);
-
-  if (isLoading) return <div>...is loading</div>;
-  if (error) return <div>{error}</div>;
+  useEffect(() => id && dispatch({type: ORDER_ACTION_TYPES.CLEAR_ORDER}), []);
 
   return (
     <div

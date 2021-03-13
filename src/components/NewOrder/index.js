@@ -25,6 +25,7 @@ const NewOrder = () => {
     phoneNumber: '',
   });
   const [showConfirm, setShowConfirm] = useState(false);
+  const [orderAdded, setOrderAdded] = useState(false);
 
   // set current order on screen
   useQuery('getOrder', async () => {
@@ -47,7 +48,7 @@ const NewOrder = () => {
         time: orderTime,
         totalWithTax: calculateOrderTotal(order.total),
       });
-      window.alert('Order Added');
+      setOrderAdded(true);
       return;
     } catch (error) {
       console.error(error);
@@ -82,7 +83,7 @@ const NewOrder = () => {
         }}
       />
       {showConfirm && (
-        <ConfirmOrder states={{onConfirm, onSubmit, dispatch}} />
+        <ConfirmOrder states={{onConfirm, onSubmit, dispatch, orderAdded}} />
       )}
     </div>
   );

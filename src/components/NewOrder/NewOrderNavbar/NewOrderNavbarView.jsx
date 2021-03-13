@@ -61,8 +61,6 @@ export default ({states}) => {
             Home
         </Link>
       </div>
-
-
     </div>
   );
 };

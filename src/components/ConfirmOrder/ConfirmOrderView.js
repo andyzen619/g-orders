@@ -2,9 +2,15 @@
 import React from 'react';
 
 import Modal from '../Modal';
+import OrderAdded from './OrderAddedView';
+import SubmitOrder from './SubmitOrderView';
 
 const View = ({states}) => {
-  const {onConfirm, onSubmit, onUpdatePhone, onUpdateTime} = states;
+  const {
+    onUpdatePhone,
+    onUpdateTime,
+    orderAdded,
+  } = states;
 
   return (
     <Modal>
@@ -29,19 +35,11 @@ const View = ({states}) => {
           />
         </div>
       </div>
-      <div className={`flex justify-between py-4 px-8 bg-gray-500`}>
-        <button className="p-2 text-white font-black" onClick={onConfirm}>
-          Close
-        </button>
-        <button
-          className={`
-            bg-white text-gray-500 rounded-md text-sm font-black p-4
-            `}
-          onClick={onSubmit}
-        >
-          Submit
-        </button>
-      </div>
+      {orderAdded ? (
+        <OrderAdded states={states} />
+      ) : (
+        <SubmitOrder states={states} />
+      )}
     </Modal>
   );
 };

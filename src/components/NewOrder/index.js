@@ -38,14 +38,11 @@ const NewOrder = () => {
 
   const onSubmit = async () => {
     try {
-      // set proper timestamp
-      const orderTime = await generateTimeObj(order.time, startDate);
-
       // add order to db
       await setOrder({
         ...order,
-        id: uuidv4(),
-        time: orderTime,
+        id: order.id || uuidv4(),
+        time: order.time || await generateTimeObj(order.time, startDate),
         totalWithTax: calculateOrderTotal(order.total),
       });
       setOrderAdded(true);
@@ -83,7 +80,7 @@ const NewOrder = () => {
         }}
       />
       {showConfirm && (
-        <ConfirmOrder states={{onConfirm, onSubmit, dispatch, orderAdded}} />
+        <ConfirmOrder states={{onConfirm, onSubmit, dispatch, orderAdded, order}} />
       )}
     </div>
   );

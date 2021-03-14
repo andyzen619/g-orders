@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import {parseTimeObject} from '../../utils';
 
 import Modal from '../Modal';
 import OrderAdded from './OrderAddedView';
@@ -10,6 +11,7 @@ const View = ({states}) => {
     onUpdatePhone,
     onUpdateTime,
     orderAdded,
+    order,
   } = states;
 
   return (
@@ -22,6 +24,7 @@ const View = ({states}) => {
             className={`
           border-b-2 border-gray-500
           `}
+            value={order.phoneNumber}
             onChange={onUpdatePhone}
           />
         </div>
@@ -31,6 +34,7 @@ const View = ({states}) => {
             className={`
           border-b-2 border-gray-500
           `}
+            value={order.time ? parseTimeObject(order.time) : ''}
             onChange={onUpdateTime}
           />
         </div>

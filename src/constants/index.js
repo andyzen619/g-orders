@@ -6,8 +6,9 @@ export const ORDER_SIZES = {
 };
 
 export const DATE_FORMAT = {
-  DATE_WITH_TIME: 'dddd, MMMM Do YYYY, h:mm:ss a',
-  TIME: 'h:mm:ss a',
+  DATE_WITH_TIME: 'dddd, MMMM Do YYYY, h:mm a',
+  TIME: 'h:mm a',
+  TIME_WITHOUT_AM_PM: 'h:mm',
 };
 
 export const ORDER_ACTION_TYPES = {

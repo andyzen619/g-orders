@@ -3,7 +3,7 @@
 import Fuse from 'fuse.js';
 import moment from 'moment';
 
-import {ORDER_SIZES} from '../constants';
+import {ORDER_SIZES, DATE_FORMAT} from '../constants';
 /**
  * Calculates order.
  * @param {*} order The original order.
@@ -43,6 +43,19 @@ export const generateTimeObj = (time, date) => {
     startDate.minute(Number(minute));
 
     return startDate.format('');
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+/**
+ * Parses moment object string.
+ * @param {string} momentString - Converts to moment object.
+ * @return {string} - A time without am pm formatted string.
+ */
+export const parseTimeObject = (momentString) => {
+  try {
+    return moment(momentString).format(DATE_FORMAT.TIME_WITHOUT_AM_PM);
   } catch (error) {
     throw new Error(error);
   }

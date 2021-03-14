@@ -13,17 +13,20 @@ export default ({states}) => {
 
   // component states
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const [searchInputText, setSearchInputText] = useState('');
 
   // methods
   function onSearchTextChange(e) {
     e.target.value.length?
       setShowSearchResults(true):setShowSearchResults(false);
-
-    return setSearch(e.target.value);
+    setSearch(e.target.value);
+    setSearchInputText(e.target.value);
   };
 
   function closeSearchResults() {
     setShowSearchResults(false);
+    // clear search bar
+    setSearchInputText('');
   };
 
   return (
@@ -32,7 +35,7 @@ export default ({states}) => {
       <div>
         <div className="flex justify-center m-2">
           <input
-            data-testid="order-search-input"
+            value={searchInputText}
             onChange={onSearchTextChange}
           />
         </div>

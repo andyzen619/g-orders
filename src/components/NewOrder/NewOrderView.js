@@ -8,21 +8,25 @@ import {calculateOrderTotal} from '../../utils';
 
 const NewOrderView = ({states}) => {
   const {order, onConfirm} = states;
+  // Remove unused states. Menu picker in this component is used to display//
+  // current menu items and does not require search.
+  // eslint-disable-next-line no-unused-vars
+  const {search, setSearch, ...withoutSearch} = states;
   const [viewHeight] = useState(window.innerHeight);
 
   return (
     <div className="flex flex-col" style={{height: `${viewHeight}px`}}>
       <NewOrderNavbarView states={states} />
-      <NewOrderMenuPicker states={states} />
+      <NewOrderMenuPicker states={withoutSearch} />
       <div className="relative flex justify-between bg-gray-500 text-white font-bold text-lg">
         <div className="flex flex-col w-5/7">
           <div className="flex pl-8  p-2">
             <div>SubTotal: </div>
-            <div data-testid="order-sub-total">{order.total}</div>
+            <div>{order.total}</div>
           </div>
           <div className="flex pl-8 p-2 text-3xl font-bold">
             <div>Total: </div>
-            <div data-testid="order-total">
+            <div>
               {calculateOrderTotal(order.total)}
             </div>
           </div>

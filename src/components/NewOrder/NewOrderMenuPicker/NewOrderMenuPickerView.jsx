@@ -6,7 +6,7 @@ import React from 'react';
 import {flattenMenuItems} from '../../../utils';
 import {ORDER_ACTION_TYPES} from '../../../constants';
 
-export default ({states, getMenuItems, query}) => {
+export default ({states, getMenuItems}) => {
   const {dispatch, search, greaterThanZero, order} = states;
   const {error, data: menuItems} = getMenuItems;
   if (error) console.log(error);
@@ -23,10 +23,6 @@ export default ({states, getMenuItems, query}) => {
               <div className="flex h-full">
                 <div className="flex justify-between my-8 mx-2 w-2/3">
                   <button
-                    data-testid={
-                      menuItem.name === '4 Combination Plate' &&
-                    'fourComboAddButton'
-                    }
                     className="bg-green-300 px-3 py-1 rounded-lg mx-2"
                     onClick={() =>
                       dispatch({
@@ -38,10 +34,6 @@ export default ({states, getMenuItems, query}) => {
                   +
                   </button>
                   <button
-                    data-testid={
-                      menuItem.name === '4 Combination Plate' &&
-                    'fourComboRemoveButton'
-                    }
                     className="bg-red-300 px-3 py-1 rounded-lg mx-2"
                     onClick={() =>
                       dispatch({

@@ -10,7 +10,7 @@ import {setOrder, getOrders} from '../../context/FirebaseContext';
 import orderReducer from '../../reducers/OrderReducer';
 import {ORDER_ACTION_TYPES} from '../../constants';
 import NewOrderView from './NewOrderView';
-import ConfirmOrder from '../ConfirmOrder';
+import ConfirmOrder from '../../components/ConfirmOrder';
 import {calculateOrderTotal, generateTimeObj} from '../../utils';
 
 const NewOrder = () => {

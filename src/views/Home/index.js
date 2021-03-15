@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import moment from 'moment';
 
-import DateButton from '../DateButton';
-import Schedule from '../Schedule';
-import NewOrderButton from '../NewOrderButton';
+import DateButton from '../../components/DateButton';
+import Schedule from '../../components/Schedule';
+import NewOrderButton from '../../components/NewOrderButton';
 
 const Home = () => {
   const [startDate, setStartDate] = useState(moment());

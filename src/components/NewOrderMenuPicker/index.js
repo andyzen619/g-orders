@@ -3,7 +3,7 @@ import React from 'react';
 import {useQuery} from 'react-query';
 
 import NewOrderMenuPickerView from './NewOrderMenuPickerView';
-import {getMenuItems} from '../../../context/FirebaseContext';
+import {getMenuItems} from '../../context/FirebaseContext';
 const NewOrderMenuPicker = ({states}) => {
   const query = useQuery(
       'getMenuItems',

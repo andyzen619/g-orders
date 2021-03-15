@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 import React, {useState} from 'react';
-
-import NewOrderNavbarView from './NewOrderNavbar';
-import NewOrderMenuPicker from './NewOrderMenuPicker';
 import {calculateOrderTotal} from '../../utils';
+import NewOrderNavbar from '../../components/NewOrderNavbar';
+import NewOrderMenuPicker from '../../components/NewOrderMenuPicker';
 
 const NewOrderView = ({states}) => {
   const {order, onConfirm} = states;
@@ -16,7 +15,7 @@ const NewOrderView = ({states}) => {
 
   return (
     <div className="flex flex-col" style={{height: `${viewHeight}px`}}>
-      <NewOrderNavbarView states={states} />
+      <NewOrderNavbar states={states} />
       <NewOrderMenuPicker states={withoutSearch} />
       <div className="relative flex justify-between bg-gray-500 text-white font-bold text-lg">
         <div className="flex flex-col w-5/7">

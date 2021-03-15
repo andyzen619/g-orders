@@ -3,8 +3,8 @@
 // stateless component
 import React from 'react';
 
-import {flattenMenuItems} from '../../../utils';
-import {ORDER_ACTION_TYPES} from '../../../constants';
+import {flattenMenuItems} from '../../utils';
+import {ORDER_ACTION_TYPES} from '../../constants';
 
 export default ({states, getMenuItems}) => {
   const {dispatch, search, greaterThanZero, order} = states;

@@ -9,13 +9,12 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "autoprefixer": "^9",
-    "eslint-config-google": "^0.14.0",
-    "eslint-plugin-react": "^7.21.5",
     "firebase": "^8.2.1",
     "fuse.js": "^6.4.4",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.32",
     "postcss": "^7",
+    "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dates": "^21.8.0",
     "react-dom": "^17.0.1",
@@ -49,8 +48,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "eslint": "^7.16.0"
   }
 }

@@ -1,13 +1,18 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const Navbar = (props) => {
-  const { title } = props;
+function Navbar(props) {
+  const { title = 'Replace Me' } = props;
   return (
     <div className="flex">
       <div>back</div>
       <div>{title}</div>
     </div>
   );
+}
+
+Navbar.propTypes = {
+  title: PropTypes.string.isRequired,
 };
 
 export default Navbar;

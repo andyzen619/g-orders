@@ -7,9 +7,12 @@ function Navbar(props) {
   return (
     <div className="flex w-screen h-20 bg-gray-700">
       <div className="flex w-1/5 justify-center my-auto">
+        <Button buttonText="Back" />
+      </div>
+      <div className="flex w-1/5 justify-center my-auto">
         <Button buttonText="Home" />
       </div>
-      <div className="flex w-3/5 justify-center my-auto font-bold text-2xl text-white">{title}</div>
+      <div className="flex w-4/5 justify-center my-auto font-bold text-2xl text-white">{title}</div>
     </div>
   );
 }
